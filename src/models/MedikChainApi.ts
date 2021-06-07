@@ -1,4 +1,4 @@
-import { MedicalRecord } from "./MedicalRecord";
+import { MedicalRecord } from './MedicalRecord';
 
 export interface MedikChainApi {
   grantAdminAccess: (user: string, overrides?: any) => Promise<void>;

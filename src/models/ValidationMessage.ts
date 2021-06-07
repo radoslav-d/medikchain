@@ -10,6 +10,6 @@ export enum ValidationMessageSeverity {
 
 export function hasErrors(validationMessages: ValidationMessage[]): boolean {
   return validationMessages.some(
-      (message) => message.severity === ValidationMessageSeverity.ERROR
+    (message) => message.severity === ValidationMessageSeverity.ERROR
   );
 }

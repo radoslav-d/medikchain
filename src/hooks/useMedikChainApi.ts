@@ -1,7 +1,7 @@
-import { appEnv } from "../app/env";
-import { MedikChainApi } from "../models/MedikChainApi";
-import MedikChainAbi from "../contracts/MedikChain.json";
-import { useContract } from "./useContract";
+import { appEnv } from '../app/env';
+import { MedikChainApi } from '../models/MedikChainApi';
+import MedikChainAbi from '../contracts/MedikChain.json';
+import { useContract } from './useContract';
 
 export function useMedikChainApi(): MedikChainApi {
   const contractAddress = appEnv().mandatory.contractAddress;

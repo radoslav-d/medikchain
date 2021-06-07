@@ -1,7 +1,7 @@
-import { useWeb3React } from "@web3-react/core";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
-import { ContractInterface } from "@ethersproject/contracts/src.ts/index";
+import { useWeb3React } from '@web3-react/core';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { Contract } from '@ethersproject/contracts';
+import { ContractInterface } from '@ethersproject/contracts/src.ts/index';
 
 export function useContract(
   contractAddress: string,

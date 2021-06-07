@@ -1,7 +1,7 @@
 import {
   ValidationMessage,
   ValidationMessageSeverity,
-} from "../../models/ValidationMessage";
+} from '../../models/ValidationMessage';
 
 interface ValidationMessagesProps {
   validationMessages: ValidationMessage[];
@@ -11,9 +11,9 @@ export function ValidationMessages(props: ValidationMessagesProps) {
   const getColor = (message: ValidationMessage) => {
     switch (message.severity) {
       case ValidationMessageSeverity.ERROR:
-        return "red";
+        return 'red';
       case ValidationMessageSeverity.WARNING:
-        return "orange";
+        return 'orange';
     }
   };
 

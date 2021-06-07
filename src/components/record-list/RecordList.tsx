@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useMedikChainApi } from "../../hooks/useMedikChainApi";
-import { MedicalRecord } from "../../models/MedicalRecord";
-import { PropsWithUserAddress } from "../../models/PropsWithUserAddress";
+import { useState } from 'react';
+import { useMedikChainApi } from '../../hooks/useMedikChainApi';
+import { MedicalRecord } from '../../models/MedicalRecord';
+import { PropsWithUserAddress } from '../../models/PropsWithUserAddress';
 
 // TODO implement virtual scrolling
 export function RecordList(props: PropsWithUserAddress) {

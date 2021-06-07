@@ -1,14 +1,14 @@
-const chai = require("chai");
-const chaiAsPromised = require("chai-as-promised");
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised).should();
 const expect = chai.expect;
-const web3Utils = require("web3").utils;
-const MedikChain = artifacts.require("./MedikChain.sol");
+const web3Utils = require('web3').utils;
+const MedikChain = artifacts.require('./MedikChain.sol');
 
-contract("MedikChain", (accounts) => {
+contract('MedikChain', (accounts) => {
   const owner = accounts[0];
 
-  it("Admin should have all rights", async () => {
+  it('Admin should have all rights', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const canEdit = await medikChainInstance.canEdit({ from: owner });
     const canGiveAccess = await medikChainInstance.canGiveAccess({
@@ -18,18 +18,18 @@ contract("MedikChain", (accounts) => {
     expect(canGiveAccess).to.be.true;
   });
 
-  it("Admin should create and view new medical record", async () => {
+  it('Admin should create and view new medical record', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const patient = accounts[2];
 
     await medikChainInstance.addMedicalRecord(
       patient,
       owner,
-      "test title",
-      "test description",
+      'test title',
+      'test description',
       accounts[3],
-      ["tag1", "tag2"],
-      "attachment location",
+      ['tag1', 'tag2'],
+      'attachment location',
       { from: owner }
     );
 
@@ -40,18 +40,18 @@ contract("MedikChain", (accounts) => {
     const medicalRecord = medicalRecords[0];
     expectMedicalRecord(
       medicalRecord,
-      "0",
-      "test title",
-      "test description",
+      '0',
+      'test title',
+      'test description',
       owner,
       patient,
       accounts[3],
-      ["tag1", "tag2"],
-      "attachment location"
+      ['tag1', 'tag2'],
+      'attachment location'
     );
   });
 
-  it("Admin should not be able to grant access if msg value is not sufficient", async () => {
+  it('Admin should not be able to grant access if msg value is not sufficient', async () => {
     const medikChainInstance = await MedikChain.deployed();
     await medikChainInstance.grantAdminAccess(accounts[5], {
       from: owner,
@@ -59,12 +59,12 @@ contract("MedikChain", (accounts) => {
     }).should.be.rejected;
   });
 
-  it("Admin should grant edit access to new user", async () => {
+  it('Admin should grant edit access to new user', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const editorUser = accounts[1];
     await medikChainInstance.grantEditAccess(editorUser, {
       from: owner,
-      value: web3Utils.toWei("1", "ether"),
+      value: web3Utils.toWei('1', 'ether'),
     });
     const canEdit = await medikChainInstance.canEdit({
       from: editorUser,
@@ -76,7 +76,7 @@ contract("MedikChain", (accounts) => {
     expect(canGiveAccess).to.be.false;
   });
 
-  it("Editor should create and view new medical record", async () => {
+  it('Editor should create and view new medical record', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const editorUser = accounts[1];
     const patient = accounts[5];
@@ -84,11 +84,11 @@ contract("MedikChain", (accounts) => {
     await medikChainInstance.addMedicalRecord(
       patient,
       editorUser,
-      "new test title",
-      "new test description",
+      'new test title',
+      'new test description',
       accounts[9],
-      ["tag3", "tag4"],
-      "attachment location",
+      ['tag3', 'tag4'],
+      'attachment location',
       { from: editorUser }
     );
 
@@ -99,18 +99,18 @@ contract("MedikChain", (accounts) => {
     const medicalRecord = medicalRecords[0];
     expectMedicalRecord(
       medicalRecord,
-      "1",
-      "new test title",
-      "new test description",
+      '1',
+      'new test title',
+      'new test description',
       editorUser,
       patient,
       accounts[9],
-      ["tag3", "tag4"],
-      "attachment location"
+      ['tag3', 'tag4'],
+      'attachment location'
     );
   });
 
-  it("Patient should view assigned medical record", async () => {
+  it('Patient should view assigned medical record', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const patient = accounts[5];
 
@@ -121,25 +121,25 @@ contract("MedikChain", (accounts) => {
     const medicalRecord = medicalRecords[0];
     expectMedicalRecord(
       medicalRecord,
-      "1",
-      "new test title",
-      "new test description",
+      '1',
+      'new test title',
+      'new test description',
       accounts[1],
       patient,
       accounts[9],
-      ["tag3", "tag4"],
-      "attachment location"
+      ['tag3', 'tag4'],
+      'attachment location'
     );
   });
 
-  it("Editor should not be able to grant access", async () => {
+  it('Editor should not be able to grant access', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const editorUser = accounts[1];
     await medikChainInstance.grantAdminAccess(accounts[5], { from: editorUser })
       .should.be.rejected;
   });
 
-  it("Patient should not be able to view other patient records", async () => {
+  it('Patient should not be able to view other patient records', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const currentUser = accounts[6];
     const canEdit = await medikChainInstance.canEdit({ from: currentUser });
@@ -153,7 +153,7 @@ contract("MedikChain", (accounts) => {
     }).should.be.rejected;
   });
 
-  it("Patient should not be able to edit", async () => {
+  it('Patient should not be able to edit', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const patient = accounts[6];
     const canEdit = await medikChainInstance.canEdit({ from: patient });
@@ -161,16 +161,16 @@ contract("MedikChain", (accounts) => {
     await medikChainInstance.addMedicalRecord(
       patient,
       accounts[1],
-      "malicious",
-      "malicious",
+      'malicious',
+      'malicious',
       accounts[9],
-      ["tag3"],
-      "malicious location",
+      ['tag3'],
+      'malicious location',
       { from: patient }
     ).should.be.rejected;
   });
 
-  it("Patient should not be able to grant access", async () => {
+  it('Patient should not be able to grant access', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const patient = accounts[6];
     await medikChainInstance.grantAdminAccess(patient, { from: patient }).should

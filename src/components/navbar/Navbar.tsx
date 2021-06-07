@@ -1,10 +1,10 @@
-import { useWeb3React } from "@web3-react/core";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { useEffect, useState } from "react";
+import { useWeb3React } from '@web3-react/core';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { useEffect, useState } from 'react';
 
 export function Navbar() {
   const { account, library } = useWeb3React<JsonRpcProvider>();
-  const [balance, setBalance] = useState("");
+  const [balance, setBalance] = useState('');
   useEffect(() => {
     account &&
       library

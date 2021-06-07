@@ -1,3 +1,3 @@
 export interface PropsWithUserAddress {
-    userAddress: string;
+  userAddress: string;
 }

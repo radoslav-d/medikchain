@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
-import { InjectedConnector } from "@web3-react/injected-connector";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { appEnv } from "./app/env";
-import { Navbar } from "./components/navbar/Navbar";
-import { AddRecordForm } from "./components/add-record-form/AddRecordForm";
-import "./App.css";
-import { RecordList } from "./components/record-list/RecordList";
+import React, { useEffect } from 'react';
+import { useWeb3React } from '@web3-react/core';
+import { InjectedConnector } from '@web3-react/injected-connector';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { appEnv } from './app/env';
+import { Greeting } from './components/greeting/Greeting';
+import { Navbar } from './components/navbar/Navbar';
+import { AddRecordForm } from './components/add-record-form/AddRecordForm';
+import { RecordList } from './components/record-list/RecordList';
+import './App.css';
 
 export function App() {
   const injectedConnector = new InjectedConnector({
@@ -16,7 +17,7 @@ export function App() {
   useEffect(() => {
     if (!active) {
       activate(injectedConnector)
-        .then(() => console.log("Web3 successfully activated"))
+        .then(() => console.log('Web3 successfully activated'))
         .catch(console.error);
     }
     if (error) {
@@ -29,10 +30,11 @@ export function App() {
   return (
     <div>
       <Navbar />
+      <Greeting />
       <AddRecordForm
-        userAddress={"0x03D4617D755b2521f3Ead1F17206C7D3D4E2A100"}
+        userAddress={'0x03D4617D755b2521f3Ead1F17206C7D3D4E2A100'}
       />
-      <RecordList userAddress={"0x03D4617D755b2521f3Ead1F17206C7D3D4E2A100"} />
+      <RecordList userAddress={'0x03D4617D755b2521f3Ead1F17206C7D3D4E2A100'} />
     </div>
   );
 }

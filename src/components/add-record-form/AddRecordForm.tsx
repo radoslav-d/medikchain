@@ -1,26 +1,26 @@
-import { isAddress } from "@ethersproject/address";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
-import { useState } from "react";
-import { useMedikChainApi } from "../../hooks/useMedikChainApi";
-import { PropsWithUserAddress } from "../../models/PropsWithUserAddress";
+import { isAddress } from '@ethersproject/address';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { useWeb3React } from '@web3-react/core';
+import { useState } from 'react';
+import { useMedikChainApi } from '../../hooks/useMedikChainApi';
+import { PropsWithUserAddress } from '../../models/PropsWithUserAddress';
 import {
   hasErrors,
   ValidationMessage,
   ValidationMessageSeverity,
-} from "../../models/ValidationMessage";
-import { ValidationMessages } from "../validation-messages/ValidationMessages";
-import "./AddRecordForm.css";
+} from '../../models/ValidationMessage';
+import { ValidationMessages } from '../validation-messages/ValidationMessages';
+import './AddRecordForm.css';
 
 export function AddRecordForm(props: PropsWithUserAddress) {
   const { account } = useWeb3React<JsonRpcProvider>();
   const { addMedicalRecord } = useMedikChainApi();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [medicalCenter, setMedicalCenter] = useState("");
-  const [tags, setTags] = useState("");
-  const [attachment, setAttachment] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [medicalCenter, setMedicalCenter] = useState('');
+  const [tags, setTags] = useState('');
+  const [attachment, setAttachment] = useState('');
   const [validationMessages, setValidationMessages] = useState<
     ValidationMessage[]
   >([]);
@@ -29,28 +29,28 @@ export function AddRecordForm(props: PropsWithUserAddress) {
     const messages: ValidationMessage[] = [];
     title ||
       messages.push({
-        message: "Title is required field",
+        message: 'Title is required field',
         severity: ValidationMessageSeverity.ERROR,
       });
     description ||
       messages.push({
-        message: "Description is required field",
+        message: 'Description is required field',
         severity: ValidationMessageSeverity.ERROR,
       });
     if (!medicalCenter || !isAddress(medicalCenter)) {
       messages.push({
-        message: "Medical center is required field and must be valid address",
+        message: 'Medical center is required field and must be valid address',
         severity: ValidationMessageSeverity.ERROR,
       });
     }
     tags ||
       messages.push({
-        message: "No tags are specified for this record",
+        message: 'No tags are specified for this record',
         severity: ValidationMessageSeverity.WARNING,
       });
     attachment ||
       messages.push({
-        message: "No attachment is selected for this record",
+        message: 'No attachment is selected for this record',
         severity: ValidationMessageSeverity.WARNING,
       });
     setValidationMessages(messages);
@@ -65,10 +65,10 @@ export function AddRecordForm(props: PropsWithUserAddress) {
         title as string,
         description as string,
         medicalCenter as string,
-        tags?.split(" ") as string[],
+        tags?.split(' ') as string[],
         attachment as string
       ).then(() => {
-        alert("Record added successfully!");
+        alert('Record added successfully!');
         // TODO forward to list of records page
       });
     }
@@ -90,7 +90,7 @@ export function AddRecordForm(props: PropsWithUserAddress) {
       patient:
       <input type="text" value={props.userAddress} disabled={true} />
       physician:
-      <input type="text" value={account || ""} disabled={true} />
+      <input type="text" value={account || ''} disabled={true} />
       medical center:
       <input
         type="text"
