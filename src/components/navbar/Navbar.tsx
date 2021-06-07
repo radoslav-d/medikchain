@@ -1,20 +1,20 @@
-import {useWeb3React} from "@web3-react/core";
-import {Web3Provider} from "@ethersproject/providers";
-import {useState} from "react";
+import { useWeb3React } from "@web3-react/core";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
-    const {account, library} = useWeb3React<Web3Provider>();
-    const [balance, setBalance] = useState('');
-    if (!account) {
-        // TODO some error handling maybe
-        console.error("No account id");
-    }
-    library?.getBalance(String(account))
-        .then(bal => setBalance(() => String(bal)))
+  const { account, library } = useWeb3React<JsonRpcProvider>();
+  const [balance, setBalance] = useState("");
+  useEffect(() => {
+    account &&
+      library
+        ?.getBalance(account as string)
+        .then((bal) => setBalance(() => String(bal)))
         .catch(console.error);
-    return (
-      <div>
-          account: {account} | balance: {balance}
-      </div>
-    );
+  });
+  return (
+    <div>
+      account: {account} | balance: {balance}
+    </div>
+  );
 }

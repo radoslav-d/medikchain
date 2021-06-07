@@ -1,8 +1,8 @@
 import { MedicalRecord } from "./MedicalRecord";
 
 export interface MedikChainApi {
-  grantAdminAccess: (user: string) => Promise<void>;
-  grantEditAccess: (user: string) => Promise<void>;
+  grantAdminAccess: (user: string, overrides?: any) => Promise<void>;
+  grantEditAccess: (user: string, overrides?: any) => Promise<void>;
   canEdit: () => Promise<boolean>;
   canGiveAccess: () => Promise<boolean>;
   addMedicalRecord: (
