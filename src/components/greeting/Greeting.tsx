@@ -1,14 +1,15 @@
-import {JsonRpcProvider} from "@ethersproject/providers";
-import {useWeb3React} from "@web3-react/core";
-import {useMedikChainApi} from "../../hooks/useMedikChainApi";
+import { useState } from 'react';
+import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 
 export function Greeting() {
-    const {account} = useWeb3React<JsonRpcProvider>();
-    const {canEdit, canGiveAccess} = useMedikChainApi();
-
-    return (
-        <div>
-            Your are logged as TODO
-        </div>
-    )
+  const { canEdit, canGiveAccess } = useMedikChainApi();
+  const [role, setRole] = useState('patient');
+  canGiveAccess().then((isAdmin) => {
+    if (isAdmin) {
+      setRole('administrator');
+    } else {
+      canEdit().then((isEditor) => isEditor && setRole('physician'));
+    }
+  });
+  return <div>Your are logged as {role}</div>;
 }
