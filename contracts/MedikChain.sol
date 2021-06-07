@@ -62,13 +62,20 @@ contract MedikChain {
         _;
     }
 
-    function grantAdminAccess(address _user) public onlyAdmins {
-        userRoles[_user].isAdmin = true;
-        userRoles[_user].isEditor = true;
+    modifier expectPaymentAmount(uint paymentAmount) {
+        require(msg.value >= paymentAmount, "Transaction value is not sufficient");
+        _;
     }
 
-    function grantEditAccess(address _user) public onlyAdmins {
+    function grantAdminAccess(address payable _user) public payable onlyAdmins expectPaymentAmount(2 ether) {
+        userRoles[_user].isAdmin = true;
         userRoles[_user].isEditor = true;
+        _user.transfer(2 ether);
+    }
+
+    function grantEditAccess(address payable _user) public payable onlyAdmins expectPaymentAmount(1 ether) {
+        userRoles[_user].isEditor = true;
+        _user.transfer(1 ether);
     }
 
     function canEdit() public view returns(bool) {
