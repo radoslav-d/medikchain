@@ -22,8 +22,20 @@ contract MedikChain {
         bool isEditor; // Editors can push changes to the blockchain
     }
 
+    struct PatientInfo {
+        address id;
+        string name;
+        string birthday;
+        string gender;
+        bool registered;
+    }
+
     event MedicalRecordPublished (
         uint id,
+        address patient
+    );
+
+    event PatientRegistered (
         address patient
     );
 
@@ -38,6 +50,9 @@ contract MedikChain {
     // @notice this mapping is the main structure of data for this contract
     // it maps the patient address to a nested mapping of ids => records of data
     mapping(address => mapping(uint => MedicalRecord)) private patientRecords;
+
+    address[] private registeredPatients;
+    mapping(address => PatientInfo) private patientsInfo;
 
     constructor() {
         // initially, only the creator has access rights
@@ -58,7 +73,8 @@ contract MedikChain {
         bool isAdmin = userRoles[msg.sender].isAdmin;
         bool isEditor = userRoles[msg.sender].isEditor;
         bool isOwner = (msg.sender == _patient);
-        require(isAdmin || isEditor || isOwner, "This user has no sufficient access rights to perform this action");
+        bool registered = isRegistered();
+        require(isAdmin || isEditor || (isOwner && registered), "This user has no sufficient access rights to perform this action");
         _;
     }
 
@@ -104,5 +120,26 @@ contract MedikChain {
             result[i] = patientRecords[_patient][i];
         }
         return result;
+    }
+
+    function getPatientsInfo() public onlyEditors view returns (PatientInfo[] memory) {
+        uint registeredPatientsCount = registeredPatients.length;
+        PatientInfo[] memory result = new PatientInfo[](registeredPatientsCount);
+        for (uint i = 0; i < registeredPatientsCount; i++) {
+            address currentPatient = registeredPatients[i];
+            result[i] = patientsInfo[currentPatient];
+        }
+        return result;
+    }
+
+    function isRegistered() public view returns(bool) {
+        return patientsInfo[msg.sender].registered;
+    }
+
+    function registerAsPatient(string memory _name, string memory _birthday, string memory _gender) public {
+        require(!isRegistered(), "Patient is already registered");
+        patientsInfo[msg.sender] = PatientInfo(msg.sender, _name, _birthday, _gender, true);
+        registeredPatients.push(msg.sender);
+        emit PatientRegistered(msg.sender);
     }
 }

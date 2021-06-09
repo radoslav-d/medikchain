@@ -2,7 +2,7 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised).should();
 const expect = chai.expect;
-const web3Utils = require('web3').utils;
+const ethers = require('@ethersproject/units');
 const MedikChain = artifacts.require('./MedikChain.sol');
 
 contract('MedikChain', (accounts) => {
@@ -64,7 +64,7 @@ contract('MedikChain', (accounts) => {
     const editorUser = accounts[1];
     await medikChainInstance.grantEditAccess(editorUser, {
       from: owner,
-      value: web3Utils.toWei('1', 'ether'),
+      value: ethers.parseEther('1'),
     });
     const canEdit = await medikChainInstance.canEdit({
       from: editorUser,
@@ -108,6 +108,79 @@ contract('MedikChain', (accounts) => {
       ['tag3', 'tag4'],
       'attachment location'
     );
+  });
+
+  it('Patient should not be able to view assigned medical record if not registered', async () => {
+    const medikChainInstance = await MedikChain.deployed();
+    const patient = accounts[5];
+
+    const isRegistered = await medikChainInstance.isRegistered({
+      from: patient,
+    });
+    expect(isRegistered).to.be.false;
+
+    await medikChainInstance.getMedicalRecords(patient, {
+      from: patient,
+    }).should.be.rejected;
+  });
+
+  it('Patient should not be able to get patient information', async () => {
+    const medikChainInstance = await MedikChain.deployed();
+    const patient = accounts[5];
+
+    await medikChainInstance.getPatientsInfo({ from: patient }).should.be
+      .rejected;
+  });
+
+  it('Patient should be able to register', async () => {
+    const medikChainInstance = await MedikChain.deployed();
+    const patient = accounts[5];
+
+    let isRegistered = await medikChainInstance.isRegistered({ from: patient });
+    expect(isRegistered).to.be.false;
+
+    await medikChainInstance.registerAsPatient('Rado', '31/12/1998', 'male', {
+      from: patient,
+    });
+    isRegistered = await medikChainInstance.isRegistered({ from: patient });
+    expect(isRegistered).to.be.true;
+  });
+
+  it('Patient should not be able to register twice', async () => {
+    const medikChainInstance = await MedikChain.deployed();
+    const patient = accounts[7];
+
+    let isRegistered = await medikChainInstance.isRegistered({ from: patient });
+    expect(isRegistered).to.be.false;
+
+    await medikChainInstance.registerAsPatient('Rali', '27/02/1998', 'female', {
+      from: patient,
+    });
+    isRegistered = await medikChainInstance.isRegistered({ from: patient });
+    expect(isRegistered).to.be.true;
+
+    await medikChainInstance.registerAsPatient(
+      'Rali but edited',
+      '27/02/1998',
+      'female',
+      { from: patient }
+    ).should.be.rejected;
+  });
+
+  it('Editors should be able to get array of registered patients', async () => {
+    const medikChainInstance = await MedikChain.deployed();
+    const editorUser = accounts[1];
+    const firstPatient = accounts[5];
+    const secondPatient = accounts[7];
+
+    const result = await medikChainInstance.getPatientsInfo({
+      from: editorUser,
+    });
+    expect(result.length).to.eq(2);
+    expect(result[0].id).to.eq(firstPatient);
+    expect(result[1].id).to.eq(secondPatient);
+    expect(result[0].name).to.eq('Rado');
+    expect(result[1].name).to.eq('Rali');
   });
 
   it('Patient should view assigned medical record', async () => {

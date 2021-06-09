@@ -7,7 +7,7 @@ export function useContract(
   contractAddress: string,
   contractAbi: ContractInterface
 ): Contract {
-  const { library } = useWeb3React<JsonRpcProvider>();
-  const signer = library?.getSigner(0);
+  const { account, library } = useWeb3React<JsonRpcProvider>();
+  const signer = library?.getSigner(account as string);
   return new Contract(contractAddress, contractAbi, signer);
 }
