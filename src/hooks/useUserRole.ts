@@ -6,20 +6,33 @@ export function useUserRole() {
   const { canEdit, canGiveAccess, isRegistered } = useMedikChainApi();
   const [role, setRole] = useState(UserRole.GUEST);
 
-  isRegistered().then((isRegisteredResultArray: boolean[]) => {
-    if (isRegisteredResultArray[0]) {
-      setRole(UserRole.PATIENT);
-    }
-  });
-  canEdit().then((isEditorResultArray: boolean[]) => {
-    if (isEditorResultArray[0]) {
-      setRole(UserRole.PHYSICIAN);
-    }
-  });
-  canGiveAccess().then((isAdminResultArray: boolean[]) => {
-    if (isAdminResultArray[0]) {
-      setRole(UserRole.ADMINISTRATOR);
-    }
-  });
-  return role;
+  const isAdmin = () =>
+    canGiveAccess().then((isAdminResultArray) => isAdminResultArray[0]);
+  const isEditor = () =>
+    canEdit().then((isEditorResultArray) => isEditorResultArray[0]);
+  const isPatient = () =>
+    isRegistered().then(
+      (isRegisteredResultArray) => isRegisteredResultArray[0]
+    );
+
+  const updateUserRole = () => {
+    isAdmin().then((admin) => {
+      if (admin) {
+        setRole(UserRole.ADMINISTRATOR);
+      } else {
+        isEditor().then((editor) => {
+          if (editor) {
+            setRole(UserRole.PHYSICIAN);
+          } else {
+            isPatient().then((patient) => {
+              if (patient) {
+                setRole(UserRole.PATIENT);
+              }
+            });
+          }
+        });
+      }
+    });
+  };
+  return { role, updateUserRole };
 }

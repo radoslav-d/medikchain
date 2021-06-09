@@ -3,10 +3,8 @@ import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { appEnv } from './app/env';
-import { Greeting } from './components/greeting/Greeting';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Navbar } from './components/navbar/Navbar';
-import { AddRecordForm } from './components/add-record-form/AddRecordForm';
-import { RecordList } from './components/record-list/RecordList';
 import './App.css';
 
 export function App() {
@@ -29,12 +27,13 @@ export function App() {
   }
   return (
     <div>
-      <Navbar />
-      <Greeting />
-      <AddRecordForm
-        userAddress={'0x03D4617D755b2521f3Ead1F17206C7D3D4E2A100'}
-      />
-      <RecordList userAddress={'0x03D4617D755b2521f3Ead1F17206C7D3D4E2A100'} />
+      <BrowserRouter forceRefresh={false}>
+        <Switch>
+          <Route path="/">
+            <Navbar />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

@@ -1,17 +1,27 @@
-import { useState } from 'react';
+import { isAddress } from '@ethersproject/address';
+import { useEffect, useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { MedicalRecord } from '../../models/MedicalRecord';
-import { PropsWithUserAddress } from '../../models/PropsWithUserAddress';
+import { useParams } from 'react-router-dom';
+import { NotFound } from '../not-found/NotFound';
 
 // TODO implement virtual scrolling
-export function RecordList(props: PropsWithUserAddress) {
+export function RecordList() {
   const { getMedicalRecords } = useMedikChainApi();
   const [medicalRecords, setMedicalRecords] = useState<MedicalRecord[]>([]);
-  getMedicalRecords(props.userAddress)
-    .then((records) => {
-      setMedicalRecords(records[0]);
-    })
-    .catch(console.error);
+  const { patientAddress } = useParams<{ patientAddress: string }>();
+
+  useEffect(() => {
+    getMedicalRecords(patientAddress)
+      .then((resultArray) => {
+        setMedicalRecords(resultArray[0]);
+      })
+      .catch(console.error);
+  });
+
+  if (!isAddress(patientAddress)) {
+    return <NotFound />;
+  }
   return (
     <div>
       {medicalRecords.map((record) => (
