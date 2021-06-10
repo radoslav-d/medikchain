@@ -24117,12 +24117,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xae9eE0b26127E018F8E5aB040cB4C9e7891A982c",
-      "transactionHash": "0xcf9b7766fbccebbfe1729efb59dce567fdf2ca0b243eea9d7bfa69162d641a56"
+      "address": "0x8ADA5EeFEF8B036Ee04a8Bf0c0fdA93aA8E84654",
+      "transactionHash": "0x90a6719eb261a53c816a894caba55bd13e7ed26484fc9c47f4bf7cd644b1c1a3"
     }
   },
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-06-09T13:57:32.326Z",
+  "updatedAt": "2021-06-09T22:01:22.305Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "Radoslav Dimitrov",

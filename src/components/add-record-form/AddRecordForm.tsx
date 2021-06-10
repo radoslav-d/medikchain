@@ -2,17 +2,18 @@ import { isAddress } from '@ethersproject/address';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { PropsWithUserAddress } from '../../models/PropsWithUserAddress';
 import {
   hasErrors,
   ValidationMessage,
   ValidationMessageSeverity,
 } from '../../models/ValidationMessage';
+import { NotFound } from '../not-found/NotFound';
 import { ValidationMessages } from '../validation-messages/ValidationMessages';
 import './AddRecordForm.css';
 
-export function AddRecordForm(props: PropsWithUserAddress) {
+export function AddRecordForm() {
   const { account } = useWeb3React<JsonRpcProvider>();
   const { addMedicalRecord } = useMedikChainApi();
 
@@ -24,6 +25,15 @@ export function AddRecordForm(props: PropsWithUserAddress) {
   const [validationMessages, setValidationMessages] = useState<
     ValidationMessage[]
   >([]);
+  const [isAdded, setIsAdded] = useState(false);
+  const { patientAddress } = useParams<{ patientAddress: string }>();
+
+  if (!isAddress(patientAddress)) {
+    return <NotFound />;
+  }
+  if (isAdded) {
+    return <Redirect to={`/patient-records/${patientAddress}`} />;
+  }
 
   const canAddRecord = () => {
     const messages: ValidationMessage[] = [];
@@ -60,16 +70,16 @@ export function AddRecordForm(props: PropsWithUserAddress) {
   const addRecord = () => {
     if (canAddRecord()) {
       addMedicalRecord(
-        props.userAddress,
+        patientAddress,
         account as string,
-        title as string,
-        description as string,
-        medicalCenter as string,
+        title,
+        description,
+        medicalCenter,
         tags?.split(' ') as string[],
-        attachment as string
+        attachment
       ).then(() => {
         alert('Record added successfully!');
-        // TODO forward to list of records page
+        setIsAdded(true);
       });
     }
   };

@@ -16,7 +16,7 @@ export function UserInfo(props: UserInfoProps) {
         ?.getBalance(account as string)
         .then((bal) => setBalance(() => String(bal)))
         .catch(console.error);
-  });
+  }, [account, library]);
   return (
     <span>
       <span>Your are logged as {props.userRole} | </span>

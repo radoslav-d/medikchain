@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { UserRole } from '../models/UserRole';
 import { useMedikChainApi } from './useMedikChainApi';
 
-export function useUserRole() {
+export function useUserRole(): { role: UserRole; updateUserRole: () => void } {
   const { canEdit, canGiveAccess, isRegistered } = useMedikChainApi();
   const [role, setRole] = useState(UserRole.GUEST);
 

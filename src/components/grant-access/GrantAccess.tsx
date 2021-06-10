@@ -1,35 +1,41 @@
+import {isAddress} from "@ethersproject/address";
 import { parseEther } from '@ethersproject/units';
 import { Button } from '@material-ui/core';
+import { useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { PropsWithUserAddress } from '../../models/PropsWithUserAddress';
 
 const EDIT_ACCESS_GRANT_ETHER_COST = '1';
 const ADMIN_ACCESS_GRANT_ETHER_COST = '2';
 
-export function GrantAccess(props: PropsWithUserAddress) {
+export function GrantAccess() {
   const { grantEditAccess, grantAdminAccess } = useMedikChainApi();
+  const [userAddress, setUserAddress] = useState('');
 
   const addEditAccess = () => {
-    grantEditAccess(props.userAddress, {
+    grantEditAccess(userAddress, {
       value: parseEther(EDIT_ACCESS_GRANT_ETHER_COST),
-    })
-      .then(() => {
-        console.log('Edit access granted!');
-      });
+    }).then(() => {
+      setUserAddress('');
+      console.log('Edit access granted!');
+    });
   };
   const addAdminAccess = () => {
-    grantAdminAccess(props.userAddress, {
+    grantAdminAccess(userAddress, {
       value: parseEther(ADMIN_ACCESS_GRANT_ETHER_COST),
-    })
-      .then(() => {
-        console.log('Admin access granted!');
-      });
+    }).then(() => {
+      setUserAddress('');
+      console.log('Admin access granted!');
+    });
   };
-
   return (
     <div>
-      <Button onClick={addEditAccess}>Grant edit access</Button>
-      <Button onClick={addAdminAccess}>Grant admin access</Button>
+      <input
+        type="text"
+        value={userAddress}
+        onChange={(e) => setUserAddress(e.target.value)}
+      />
+      <Button onClick={addEditAccess} disabled={!isAddress(userAddress)}>Grant edit access</Button>
+      <Button onClick={addAdminAccess} disabled={!isAddress(userAddress)}>Grant admin access</Button>
     </div>
   );
 }

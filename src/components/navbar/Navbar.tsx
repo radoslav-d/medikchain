@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { Link, Switch } from 'react-router-dom';
 import { useUserRole } from '../../hooks/useUserRole';
 import { canEdit, UserRole } from '../../models/UserRole';
+import { AddRecordForm } from '../add-record-form/AddRecordForm';
 import { GrantAccess } from '../grant-access/GrantAccess';
 import { PatientRegister } from '../patient-register/PatientRegister';
 import { PrivateRoute } from '../private-route/PrivateRoute';
@@ -14,7 +15,7 @@ import { UserInfo } from '../user-info/UserInfo';
 
 export function Navbar() {
   const { role, updateUserRole } = useUserRole();
-  useEffect(() => updateUserRole());
+  useEffect(() => updateUserRole(), [role, updateUserRole]);
 
   const getRoleOptions = () => {
     switch (role) {
@@ -35,6 +36,13 @@ export function Navbar() {
       <div>{getRoleOptions()}</div>
       <Switch>
         <PrivateRoute
+          path="/patient-records/new/:patientAddress"
+          redirectPath="/"
+          callback={() => canEdit(role)}
+        >
+          <AddRecordForm />
+        </PrivateRoute>
+        <PrivateRoute
           path="/patient-records/:patientAddress"
           redirectPath="/"
           callback={() => role !== UserRole.GUEST}
@@ -53,9 +61,7 @@ export function Navbar() {
           redirectPath="/"
           callback={() => role === UserRole.ADMINISTRATOR}
         >
-          <GrantAccess
-            userAddress={'0xC31b1A1FD6981b744B797733C4E44d84D72CF4BD'}
-          />
+          <GrantAccess />
         </PrivateRoute>
         <PrivateRoute
           path="/register"

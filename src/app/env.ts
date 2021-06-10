@@ -1,5 +1,5 @@
 const defaultVariables = {
-  contractAddress: '0x93DfbB347574809308dA9FbD00F4C39fD29044d5',
+  contractAddress: '0x8ADA5EeFEF8B036Ee04a8Bf0c0fdA93aA8E84654',
   chainId: 1337,
   jsonRpcProviderUrl: 'http://127.0.0.1:7545',
 };

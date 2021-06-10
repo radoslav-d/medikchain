@@ -12,13 +12,10 @@ export function RecordList() {
   const { patientAddress } = useParams<{ patientAddress: string }>();
 
   useEffect(() => {
-    getMedicalRecords(patientAddress)
-      .then((resultArray) => {
-        setMedicalRecords(resultArray[0]);
-      })
-      .catch(console.error);
-  });
-
+    getMedicalRecords(patientAddress).then((resultArray) => {
+      setMedicalRecords(resultArray[0]);
+    });
+  }, [patientAddress, getMedicalRecords]);
   if (!isAddress(patientAddress)) {
     return <NotFound />;
   }

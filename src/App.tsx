@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { JsonRpcProvider } from '@ethersproject/providers';
@@ -21,13 +21,13 @@ export function App() {
     if (error) {
       console.error(error);
     }
-  });
+  }, [active, error]);
   if (!active) {
     return <div>Loading...</div>;
   }
   return (
     <div>
-      <BrowserRouter forceRefresh={false}>
+      <BrowserRouter>
         <Switch>
           <Route path="/">
             <Navbar />
