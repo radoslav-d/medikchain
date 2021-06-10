@@ -1,16 +1,14 @@
 import { isAddress } from '@ethersproject/address';
 import { JsonRpcProvider } from '@ethersproject/providers';
+import { Button } from '@material-ui/core';
 import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import {
-  hasErrors,
-  ValidationMessage,
-  ValidationMessageSeverity,
-} from '../../models/ValidationMessage';
+import { FileInputButton } from '../input-fields/FileInputButton';
+import { TagInputField } from '../input-fields/TagInputField';
+import { TextInputField } from '../input-fields/TextInputField';
 import { NotFound } from '../not-found/NotFound';
-import { ValidationMessages } from '../validation-messages/ValidationMessages';
 import './AddRecordForm.css';
 
 export function AddRecordForm() {
@@ -20,107 +18,78 @@ export function AddRecordForm() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [medicalCenter, setMedicalCenter] = useState('');
-  const [tags, setTags] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
   const [attachment, setAttachment] = useState('');
-  const [validationMessages, setValidationMessages] = useState<
-    ValidationMessage[]
-  >([]);
   const [isAdded, setIsAdded] = useState(false);
   const { patientAddress } = useParams<{ patientAddress: string }>();
-
   if (!isAddress(patientAddress)) {
     return <NotFound />;
   }
   if (isAdded) {
     return <Redirect to={`/patient-records/${patientAddress}`} />;
   }
-
-  const canAddRecord = () => {
-    const messages: ValidationMessage[] = [];
-    title ||
-      messages.push({
-        message: 'Title is required field',
-        severity: ValidationMessageSeverity.ERROR,
-      });
-    description ||
-      messages.push({
-        message: 'Description is required field',
-        severity: ValidationMessageSeverity.ERROR,
-      });
-    if (!medicalCenter || !isAddress(medicalCenter)) {
-      messages.push({
-        message: 'Medical center is required field and must be valid address',
-        severity: ValidationMessageSeverity.ERROR,
-      });
-    }
-    tags ||
-      messages.push({
-        message: 'No tags are specified for this record',
-        severity: ValidationMessageSeverity.WARNING,
-      });
-    attachment ||
-      messages.push({
-        message: 'No attachment is selected for this record',
-        severity: ValidationMessageSeverity.WARNING,
-      });
-    setValidationMessages(messages);
-    return !hasErrors(messages);
-  };
-
+  const isValid = () =>
+    title && description && medicalCenter && isAddress(medicalCenter);
   const addRecord = () => {
-    if (canAddRecord()) {
-      addMedicalRecord(
-        patientAddress,
-        account as string,
-        title,
-        description,
-        medicalCenter,
-        tags?.split(' ') as string[],
-        attachment
-      ).then(() => {
-        alert('Record added successfully!');
-        setIsAdded(true);
-      });
-    }
+    addMedicalRecord(
+      patientAddress,
+      account as string,
+      title,
+      description,
+      medicalCenter,
+      tags,
+      attachment
+    ).then(() => {
+      alert('Record added successfully!');
+      setIsAdded(true);
+    });
   };
   return (
     <div className="add-record-form">
-      title:
-      <input
-        type="text"
+      <TextInputField
+        placeholder="Title"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={setTitle}
+        required
       />
-      description:
-      <input
-        type="text"
+      <TextInputField
+        placeholder="Description"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={setDescription}
+        required
+        multiline
       />
-      patient:
-      <input type="text" value={props.userAddress} disabled={true} />
-      physician:
-      <input type="text" value={account || ''} disabled={true} />
-      medical center:
-      <input
-        type="text"
+      <TextInputField
+        placeholder="Patient address"
+        value={patientAddress}
+        address
+        disabled
+      />
+      <TextInputField
+        placeholder="Physician address"
+        value={account as string}
+        address
+        disabled
+      />
+      <TextInputField
+        placeholder="Medical center address"
         value={medicalCenter}
-        onChange={(e) => setMedicalCenter(e.target.value)}
+        onChange={setMedicalCenter}
+        address
+        required
       />
-      tags:
-      <input
-        type="text"
-        value={tags}
-        onChange={(e) => setTags(e.target.value)}
+      <TagInputField
+        placeholder="Tags"
+        tags={tags}
+        onAdd={(tag) => setTags((prevTags) => [...prevTags, tag])}
+        onDelete={(tag, index) =>
+          setTags((prevTags) => prevTags.filter((t) => t !== tag))
+        }
       />
-      attachment:
-      <input
-        type="text"
-        value={attachment}
-        onChange={(e) => setAttachment(e.target.value)}
-      />
-      <button onClick={addRecord}>Submit</button>
-      <ValidationMessages validationMessages={validationMessages} />
+      <FileInputButton />
+      <Button onClick={addRecord} disabled={!isValid()}>
+        Submit
+      </Button>
     </div>
   );
 }
