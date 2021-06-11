@@ -10,12 +10,15 @@ interface UserInfoProps {
 export function UserInfo(props: UserInfoProps) {
   const { account, library } = useWeb3React<JsonRpcProvider>();
   const [balance, setBalance] = useState('');
+
   useEffect(() => {
-    account &&
-      library
-        ?.getBalance(account as string)
-        .then((bal) => setBalance(() => String(bal)))
-        .catch(console.error);
+    const getBalance = async () => {
+      if (account) {
+        const balanceResult = await library?.getBalance(account as string);
+        setBalance(String(balanceResult));
+      }
+    };
+    getBalance();
   }, [account, library]);
   return (
     <span>

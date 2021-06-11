@@ -10,11 +10,11 @@ export function SelectPatient() {
   const [patientsInfoView, setPatientsInfoView] = useState<PatientInfo[]>([]);
   const { getPatientsInfo } = useMedikChainApi();
   const match = useRouteMatch();
-  useEffect(() => {
-    getPatientsInfo().then((resultArray) => {
-      setPatientsInfoCache(resultArray[0]);
-    });
-  }, [getPatientsInfo]);
+
+  const fetchPatientInfo = async () => {
+    const patientInfo = (await getPatientsInfo())[0];
+    setPatientsInfoCache(patientInfo);
+  };
   const searchPatient = () => {
     const filteredPatients = patientsInfoCache.filter(
       (patientInfo) =>
@@ -23,6 +23,9 @@ export function SelectPatient() {
     );
     setPatientsInfoView(filteredPatients);
   };
+  useEffect(() => {
+    fetchPatientInfo();
+  }, [fetchPatientInfo]);
   return (
     <div>
       <input

@@ -12,9 +12,11 @@ export function RecordList() {
   const { patientAddress } = useParams<{ patientAddress: string }>();
 
   useEffect(() => {
-    getMedicalRecords(patientAddress).then((resultArray) => {
+    const retrieveMedicalRecords = async () => {
+      const resultArray = await getMedicalRecords(patientAddress);
       setMedicalRecords(resultArray[0]);
-    });
+    };
+    retrieveMedicalRecords();
   }, [patientAddress, getMedicalRecords]);
   if (!isAddress(patientAddress)) {
     return <NotFound />;

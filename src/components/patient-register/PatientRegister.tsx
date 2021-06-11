@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import { useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { Redirect } from 'react-router-dom';
+import { TextInputField } from '../input-fields/TextInputField';
 
 interface PatientRegisterProps {
   onRegister: () => void;
@@ -12,37 +13,45 @@ export function PatientRegister(props: PatientRegisterProps) {
   const { registerAsPatient } = useMedikChainApi();
   const [registered, setRegistered] = useState(false);
   const [name, setName] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [nationalId, setNationalId] = useState('');
   const [gender, setGender] = useState('');
 
-  const register = () => {
-    registerAsPatient(name, birthday, gender).then(() => {
-      alert('Registration completed!');
-      props.onRegister();
-      setRegistered(true);
-    });
+  const register = async () => {
+    await registerAsPatient(name, nationalId, gender);
+    alert('Registration completed!');
+    props.onRegister();
+    setRegistered(true);
   };
+  const isValid = () => {
+    return name.trim() && nationalId.trim() && gender.trim();
+  };
+
   if (registered) {
     return <Redirect push to="/" />;
   }
   return (
     <div>
-      <input
-        type="text"
+      <TextInputField
+        placeholder="Patient name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={setName}
+        required
       />
-      <input
-        type="text"
-        value={birthday}
-        onChange={(e) => setBirthday(e.target.value)}
+      <TextInputField
+        placeholder="National ID number"
+        value={nationalId}
+        onChange={setNationalId}
+        required
       />
-      <input
-        type="text"
+      <TextInputField
+        placeholder="Gender"
         value={gender}
-        onChange={(e) => setGender(e.target.value)}
+        onChange={setGender}
+        required
       />
-      <Button onClick={register}>Register</Button>
+      <Button onClick={register} disabled={!isValid()}>
+        Register
+      </Button>
     </div>
   );
 }

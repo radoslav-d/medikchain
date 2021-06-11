@@ -15,7 +15,9 @@ import { UserInfo } from '../user-info/UserInfo';
 
 export function Navbar() {
   const { role, updateUserRole } = useUserRole();
-  useEffect(() => updateUserRole(), [role, updateUserRole]);
+  useEffect(() => {
+    updateUserRole();
+  }, [role, updateUserRole]);
 
   const getRoleOptions = () => {
     switch (role) {
