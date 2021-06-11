@@ -25,7 +25,7 @@ contract MedikChain {
     struct PatientInfo {
         address id;
         string name;
-        string birthday;
+        string nationalId;
         string gender;
         bool registered;
     }
@@ -136,9 +136,9 @@ contract MedikChain {
         return patientsInfo[msg.sender].registered;
     }
 
-    function registerAsPatient(string memory _name, string memory _birthday, string memory _gender) public {
+    function registerAsPatient(string memory _name, string memory _nationalId, string memory _gender) public {
         require(!isRegistered(), "Patient is already registered");
-        patientsInfo[msg.sender] = PatientInfo(msg.sender, _name, _birthday, _gender, true);
+        patientsInfo[msg.sender] = PatientInfo(msg.sender, _name, _nationalId, _gender, true);
         registeredPatients.push(msg.sender);
         emit PatientRegistered(msg.sender);
     }

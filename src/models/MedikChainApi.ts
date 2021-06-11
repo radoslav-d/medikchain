@@ -19,7 +19,7 @@ export interface MedikChainApi {
   isRegistered: () => Promise<boolean[]>;
   registerAsPatient: (
     name: string,
-    birthday: string,
+    nationalId: string,
     gender: string
   ) => Promise<void>;
   getPatientsInfo: () => Promise<PatientInfo[][]>;
