@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
+import { useIpfsClient } from '../../hooks/useIpfs';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { FileInputButton } from '../input-fields/FileInputButton';
 import { TagInputField } from '../input-fields/TagInputField';
@@ -14,14 +15,16 @@ import './AddRecordForm.css';
 export function AddRecordForm() {
   const { account } = useWeb3React<JsonRpcProvider>();
   const { addMedicalRecord } = useMedikChainApi();
-
+  const { uploadToIpfs } = useIpfsClient();
+  const { patientAddress } = useParams<{ patientAddress: string }>();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [medicalCenter, setMedicalCenter] = useState('');
   const [tags, setTags] = useState<string[]>([]);
-  const [attachment, setAttachment] = useState('');
+  const [fileName, setFileName] = useState<string>();
+  const [fileBuffer, setFileBuffer] = useState<Buffer>();
   const [isAdded, setIsAdded] = useState(false);
-  const { patientAddress } = useParams<{ patientAddress: string }>();
+
   if (!isAddress(patientAddress)) {
     return <NotFound />;
   }
@@ -30,19 +33,27 @@ export function AddRecordForm() {
   }
   const isValid = () =>
     title && description && medicalCenter && isAddress(medicalCenter);
-  const addRecord = () => {
-    addMedicalRecord(
+  const addRecord = async () => {
+    const fileInfo = await getFileInfo();
+    await addMedicalRecord(
       patientAddress,
       account as string,
       title,
       description,
       medicalCenter,
       tags,
-      attachment
-    ).then(() => {
-      alert('Record added successfully!');
-      setIsAdded(true);
-    });
+      fileInfo
+    );
+    alert('Record added successfully!');
+    setIsAdded(true);
+  };
+  const getFileInfo = async (): Promise<string> => {
+    if (fileBuffer && fileName) {
+      const result = await uploadToIpfs(fileBuffer);
+      return `${result.path}:${fileName}`;
+      // const fileUrl = `https://ipfs.infura.io/ipfs/${result.path}`;
+    }
+    return '';
   };
   return (
     <div className="add-record-form">
@@ -86,7 +97,16 @@ export function AddRecordForm() {
           setTags((prevTags) => prevTags.filter((t) => t !== tag))
         }
       />
-      <FileInputButton />
+      <FileInputButton
+        onCapture={(fileName, fileBuffer) => {
+          setFileName(fileName);
+          setFileBuffer(fileBuffer);
+        }}
+        onUncapture={() => {
+          setFileName(undefined);
+          setFileBuffer(undefined);
+        }}
+      />
       <Button onClick={addRecord} disabled={!isValid()}>
         Submit
       </Button>
