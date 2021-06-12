@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ChangeEvent, useState } from 'react';
+import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
 
 interface FileInputButtonProps {
   onCapture: (fileName: string, fileBuffer: Buffer) => void;
@@ -53,6 +54,7 @@ export function FileInputButton(props: FileInputButtonProps) {
           <u>{fileName}</u>
         </Button>
       )}
+      <BackdropSpinner opened={loading} />
     </div>
   );
 }

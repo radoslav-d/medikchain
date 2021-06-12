@@ -30,10 +30,14 @@ export function SelectPatient() {
   const { getPatientsInfo } = useMedikChainApi();
   const match = useRouteMatch();
 
-  const fetchPatientInfo = async () => {
-    const patientInfo = (await getPatientsInfo())[0];
-    setPatientsInfoCache(patientInfo);
-  };
+  useEffect(() => {
+    const fetchPatientInfo = async () => {
+      const patientInfo = (await getPatientsInfo())[0];
+      setPatientsInfoCache(patientInfo);
+    };
+    fetchPatientInfo();
+  }, [getPatientsInfo]);
+
   const searchPatient = () => {
     const filteredPatients = patientsInfoCache.filter((patientInfo) =>
       // @ts-ignore
@@ -44,9 +48,6 @@ export function SelectPatient() {
   const matchedSearchValue = (property: string): boolean =>
     property === searchValue || property.includes(searchValue);
 
-  useEffect(() => {
-    fetchPatientInfo();
-  }, [fetchPatientInfo]);
   return (
     <div>
       <TextInputField

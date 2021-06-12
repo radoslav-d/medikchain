@@ -3,6 +3,7 @@ import { parseEther } from '@ethersproject/units';
 import { Button } from '@material-ui/core';
 import { useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
+import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
 import { TextInputField } from '../input-fields/TextInputField';
 
 const EDIT_ACCESS_GRANT_ETHER_COST = '1';
@@ -24,6 +25,7 @@ export function GrantAccess() {
     });
     alert(message);
     setUserAddress('');
+    setLoading(false);
   };
   const addAdminAccess = async () => {
     await grantAccess(
@@ -57,6 +59,7 @@ export function GrantAccess() {
       <Button onClick={addAdminAccess} disabled={shouldDisableButton()}>
         Grant admin access
       </Button>
+      <BackdropSpinner opened={loading} />
     </div>
   );
 }
