@@ -9,3 +9,7 @@ export interface MedicalRecord {
   tags: string[];
   attachment: string;
 }
+
+export function getFormattedDate(record: MedicalRecord) {
+  return new Date(record.date * 1000).toUTCString();
+}

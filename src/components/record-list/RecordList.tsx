@@ -1,10 +1,9 @@
-import { isAddress } from '@ethersproject/address';
 import { useEffect, useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { MedicalRecord } from '../../models/MedicalRecord';
 import { useParams } from 'react-router-dom';
 import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
-import { NotFound } from '../not-found/NotFound';
+import { PatientAddressAccess } from '../patient-address-access/PatientAddressAccess';
 import { VirtualList } from '../virtual-list/VirtualList';
 import { RecordOverview } from './RecordOverview';
 import './RecordList.css';
@@ -27,20 +26,19 @@ export function RecordList() {
     };
     retrieveMedicalRecords();
   }, [patientAddress, getMedicalRecords]);
-  if (!isAddress(patientAddress)) {
-    return <NotFound />;
-  }
 
   return (
-    <div className="record-list">
-      <VirtualList
-        renderBuffer={VIRTUAL_LIST_RENDER_BUFFER}
-        childHeight={LIST_ITEM_HEIGHT}
-        height={VIRTUAL_LIST_HEIGHT}
-        data={medicalRecords}
-        mapping={(r) => <RecordOverview key={r.id} medicalRecord={r} />}
-      />
-      <BackdropSpinner opened={loading} />
-    </div>
+    <PatientAddressAccess patientRecordAddress={patientAddress}>
+      <div className="record-list">
+        <VirtualList
+          renderBuffer={VIRTUAL_LIST_RENDER_BUFFER}
+          childHeight={LIST_ITEM_HEIGHT}
+          height={VIRTUAL_LIST_HEIGHT}
+          data={medicalRecords}
+          mapping={(r) => <RecordOverview key={r.id} medicalRecord={r} />}
+        />
+        <BackdropSpinner opened={loading} />
+      </div>
+    </PatientAddressAccess>
   );
 }

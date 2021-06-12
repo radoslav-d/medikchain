@@ -2,10 +2,11 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { Button } from '@material-ui/core';
 import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
-import { Link, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { useUserRole } from '../../hooks/useUserRole';
 import { canEdit, UserRole } from '../../models/UserRole';
 import { AddRecordForm } from '../add-record-form/AddRecordForm';
+import { DetailedRecord } from '../detailed-record/DetailedRecord';
 import { GrantAccess } from '../grant-access/GrantAccess';
 import { PatientRegister } from '../patient-register/PatientRegister';
 import { PrivateRoute } from '../private-route/PrivateRoute';
@@ -44,13 +45,12 @@ export function Navbar() {
         >
           <AddRecordForm />
         </PrivateRoute>
-        <PrivateRoute
-          path="/patient-records/:patientAddress"
-          redirectPath="/"
-          callback={() => role !== UserRole.GUEST}
-        >
+        <Route path="/patient-records/:patientAddress/:medicalRecordId">
+          <DetailedRecord />
+        </Route>
+        <Route path="/patient-records/:patientAddress">
           <RecordList />
-        </PrivateRoute>
+        </Route>
         <PrivateRoute
           path="/patient-records"
           redirectPath="/"
