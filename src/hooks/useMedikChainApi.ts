@@ -12,6 +12,7 @@ export function useMedikChainApi(): MedikChainApi {
     canGiveAccess: functions.canGiveAccess,
     addMedicalRecord: functions.addMedicalRecord,
     getMedicalRecords: functions.getMedicalRecords,
+    getMedicalRecord: functions.getMedicalRecord,
     isRegistered: functions.isRegistered,
     registerAsPatient: functions.registerAsPatient,
     getPatientsInfo: functions.getPatientsInfo,

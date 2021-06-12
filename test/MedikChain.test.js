@@ -20,7 +20,7 @@ contract('MedikChain', (accounts) => {
 
   it('Admin should create and view new medical record', async () => {
     const medikChainInstance = await MedikChain.deployed();
-    const patient = accounts[2];
+    const patient = accounts[5];
 
     await medikChainInstance.addMedicalRecord(
       patient,
@@ -95,8 +95,8 @@ contract('MedikChain', (accounts) => {
     const medicalRecords = await medikChainInstance.getMedicalRecords(patient, {
       from: editorUser,
     });
-    expect(medicalRecords.length).to.eq(1);
-    const medicalRecord = medicalRecords[0];
+    expect(medicalRecords.length).to.eq(2);
+    const medicalRecord = medicalRecords[1];
     expectMedicalRecord(
       medicalRecord,
       '1',
@@ -183,15 +183,64 @@ contract('MedikChain', (accounts) => {
     expect(result[1].name).to.eq('Rali');
   });
 
-  it('Patient should view assigned medical record', async () => {
+  it('Editor should view specific assigned medical record', async () => {
+    const medikChainInstance = await MedikChain.deployed();
+    const editor = accounts[1];
+    const patient = accounts[5];
+
+    const medicalRecord = await medikChainInstance.getMedicalRecord(
+      patient,
+      1,
+      {
+        from: editor,
+      }
+    );
+    expectMedicalRecord(
+      medicalRecord,
+      '1',
+      'new test title',
+      'new test description',
+      accounts[1],
+      patient,
+      accounts[9],
+      ['tag3', 'tag4'],
+      'attachment location'
+    );
+  });
+
+  it('Patient should view all assigned medical records', async () => {
     const medikChainInstance = await MedikChain.deployed();
     const patient = accounts[5];
 
     const medicalRecords = await medikChainInstance.getMedicalRecords(patient, {
       from: patient,
     });
-    expect(medicalRecords.length).to.eq(1);
-    const medicalRecord = medicalRecords[0];
+    expect(medicalRecords.length).to.eq(2);
+    const medicalRecord = medicalRecords[1];
+    expectMedicalRecord(
+      medicalRecord,
+      '1',
+      'new test title',
+      'new test description',
+      accounts[1],
+      patient,
+      accounts[9],
+      ['tag3', 'tag4'],
+      'attachment location'
+    );
+  });
+
+  it('Patient should view specific assigned medical record', async () => {
+    const medikChainInstance = await MedikChain.deployed();
+    const patient = accounts[5];
+
+    const medicalRecord = await medikChainInstance.getMedicalRecord(
+      patient,
+      1,
+      {
+        from: patient,
+      }
+    );
     expectMedicalRecord(
       medicalRecord,
       '1',

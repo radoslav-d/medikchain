@@ -104,14 +104,16 @@ contract MedikChain {
 
     function addMedicalRecord(address _patient, address _physician, string memory _title, string memory _description,
                               address _medicalCenter, string[] memory _tags, string memory _attachment) public onlyEditors {
-        uint recordsCountForUser = recordsForPatients[_patient];
-        patientRecords[_patient][recordsCountForUser] = MedicalRecord(recordsCount, _title, _description, _physician,
+        patientRecords[_patient][recordsForPatients[_patient]] = MedicalRecord(recordsForPatients[_patient], _title, _description, _physician,
                                                                       _patient, block.timestamp, _medicalCenter, _tags,
                                                                       _attachment);
-        recordsForPatients[_patient] = recordsCountForUser + 1;
-        emit MedicalRecordPublished(recordsCount++, _patient);
+        emit MedicalRecordPublished(recordsForPatients[_patient]++, _patient);
     }
 
+    function getMedicalRecord(address _patient, uint _recordId) public onlyViewer(_patient) view returns (MedicalRecord memory) {
+        require(recordsForPatients[_patient] > _recordId, "Invalid medical record ID");
+        return patientRecords[_patient][_recordId];
+    }
 
     function getMedicalRecords(address _patient) public onlyViewer(_patient) view returns (MedicalRecord[] memory) {
         uint recordsCountForUser = recordsForPatients[_patient];
