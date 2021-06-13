@@ -1,4 +1,10 @@
 .record-list {
     min-width: 400px;
-    margin: 5vh 20vw;
+    width: 70%;
+    margin: 5vh auto;
+}
+
+.record-list-search {
+    display: flex;
+    justify-content: center;
 }

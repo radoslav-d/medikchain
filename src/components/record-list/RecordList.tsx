@@ -1,20 +1,27 @@
+import { Button } from '@material-ui/core';
+import { Delete, FilterList } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { MedicalRecord } from '../../models/MedicalRecord';
 import { useParams } from 'react-router-dom';
 import { PatientAddressAccess } from '../patient-address-access/PatientAddressAccess';
+import { SearchBar } from '../search-bar/SearchBar';
 import { VirtualList } from '../virtual-list/VirtualList';
 import { RecordOverview } from './RecordOverview';
 import './RecordList.css';
 
-const VIRTUAL_LIST_RENDER_BUFFER = 20;
 const LIST_ITEM_HEIGHT = 72;
-const VIRTUAL_LIST_HEIGHT = 400;
+const VIRTUAL_LIST_HEIGHT = 500;
 
 export function RecordList() {
   const { getMedicalRecords } = useMedikChainApi();
-  const [medicalRecords, setMedicalRecords] = useState<MedicalRecord[]>([]);
+  const [medicalRecordsCache, setMedicalRecordsCache] = useState<
+    MedicalRecord[]
+  >([]);
+  const [medicalRecordsView, setMedicalRecordsView] = useState<MedicalRecord[]>(
+    []
+  );
   const { patientAddress } = useParams<{ patientAddress: string }>();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
 
@@ -22,22 +29,52 @@ export function RecordList() {
     const retrieveMedicalRecords = async () => {
       dispatchLoading();
       const resultArray = await getMedicalRecords(patientAddress);
-      setMedicalRecords(resultArray[0]);
+      setMedicalRecordsCache(resultArray[0]);
+      setMedicalRecordsView(resultArray[0]);
       dispatchNotLoading();
     };
     retrieveMedicalRecords();
   }, [patientAddress]);
 
+  const searchRecord = (searchValue: string) => {
+    const filteredRecords = medicalRecordsCache.filter((record) =>
+      record.tags.some(
+        (tag) => tag === searchValue || tag.includes(searchValue)
+      )
+    );
+    setMedicalRecordsView(filteredRecords);
+  };
+
+  const isViewFiltered = () =>
+    medicalRecordsCache.length !== medicalRecordsView.length;
+
   return (
     <PatientAddressAccess patientRecordAddress={patientAddress}>
       <div className="record-list">
+        <div className="record-list-search">
+          <SearchBar
+            inputPlaceholder="Search by tags"
+            buttonLabel="Filter"
+            onSearch={searchRecord}
+            buttonIcon={<FilterList />}
+          />
+          <Button
+            endIcon={<Delete />}
+            color="secondary"
+            style={{
+              visibility: isViewFiltered() ? 'visible' : 'hidden',
+            }}
+            onClick={() => setMedicalRecordsView(medicalRecordsCache)}
+          >
+            Clear filter
+          </Button>
+        </div>
         <VirtualList
-          renderBuffer={VIRTUAL_LIST_RENDER_BUFFER}
           childHeight={LIST_ITEM_HEIGHT}
           height={VIRTUAL_LIST_HEIGHT}
-          data={medicalRecords}
+          data={medicalRecordsView}
           mapping={(r) => <RecordOverview key={r.id} medicalRecord={r} />}
-          onEmptyList={<div>There are no records for this user</div>}
+          onEmptyList={<div>There are no records found</div>}
         />
       </div>
     </PatientAddressAccess>
