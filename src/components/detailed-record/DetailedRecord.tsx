@@ -1,9 +1,9 @@
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { getFormattedDate, MedicalRecord } from '../../models/MedicalRecord';
-import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
 import { NotFound } from '../not-found/NotFound';
 import { PatientAddressAccess } from '../patient-address-access/PatientAddressAccess';
 import { FileDownloader } from './FileDownloader';
@@ -14,22 +14,23 @@ export function DetailedRecord() {
   const { patientAddress, medicalRecordId } =
     useParams<{ patientAddress: string; medicalRecordId: string }>();
   const [record, setRecord] = useState<MedicalRecord>();
-  const [loading, setLoading] = useState(true);
+  const { dispatchLoading, dispatchNotLoading } = useAppLoading();
 
   const isRecordIdValid = () => !isNaN(+medicalRecordId);
 
   useEffect(() => {
     const retrieveRecordInfo = async () => {
+      dispatchLoading();
       if (isRecordIdValid()) {
         const record = (
           await getMedicalRecord(patientAddress, +medicalRecordId)
         )[0];
         setRecord(record);
       }
-      setLoading(false);
+      dispatchNotLoading();
     };
     retrieveRecordInfo();
-  }, [patientAddress, medicalRecordId, getMedicalRecord]);
+  }, [patientAddress, medicalRecordId]);
   if (!isRecordIdValid()) {
     return <NotFound />;
   }
@@ -55,7 +56,6 @@ export function DetailedRecord() {
             </CardActions>
           )}
         </Card>
-        <BackdropSpinner opened={loading} />
       </div>
     </PatientAddressAccess>
   );

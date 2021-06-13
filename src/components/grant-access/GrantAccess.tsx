@@ -2,8 +2,8 @@ import { isAddress } from '@ethersproject/address';
 import { parseEther } from '@ethersproject/units';
 import { Button } from '@material-ui/core';
 import { useState } from 'react';
+import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
 import { TextInputField } from '../input-fields/TextInputField';
 
 const EDIT_ACCESS_GRANT_ETHER_COST = '1';
@@ -11,21 +11,21 @@ const ADMIN_ACCESS_GRANT_ETHER_COST = '2';
 
 export function GrantAccess() {
   const { grantEditAccess, grantAdminAccess } = useMedikChainApi();
+  const { dispatchLoading, dispatchNotLoading } = useAppLoading();
   const [userAddress, setUserAddress] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const grantAccess = async (
     contractFunction: (user: string, overrides?: any) => Promise<void>,
     etherValue: string,
     message: string
   ) => {
-    setLoading(true);
+    dispatchLoading();
     await contractFunction(userAddress, {
       value: parseEther(etherValue),
     });
+    dispatchNotLoading();
     alert(message);
     setUserAddress('');
-    setLoading(false);
   };
   const addAdminAccess = async () => {
     await grantAccess(
@@ -42,7 +42,7 @@ export function GrantAccess() {
     );
   };
   const shouldDisableButton = () => {
-    return !isAddress(userAddress) || loading;
+    return !isAddress(userAddress);
   };
   return (
     <div>
@@ -59,7 +59,6 @@ export function GrantAccess() {
       <Button onClick={addAdminAccess} disabled={shouldDisableButton()}>
         Grant admin access
       </Button>
-      <BackdropSpinner opened={loading} />
     </div>
   );
 }

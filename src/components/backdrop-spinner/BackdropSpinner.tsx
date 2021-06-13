@@ -7,7 +7,11 @@ interface BackdropSpinnerProps {
 
 export function BackdropSpinner(props: BackdropSpinnerProps) {
   return (
-    <Backdrop className="backdrop-spinner" open={props.opened}>
+    <Backdrop
+      className="backdrop-spinner"
+      open={props.opened}
+      onClick={(e) => false}
+    >
       <CircularProgress color="inherit" />
     </Backdrop>
   );

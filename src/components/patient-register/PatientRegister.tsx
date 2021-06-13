@@ -1,34 +1,33 @@
 import { Button } from '@material-ui/core';
 import { useState } from 'react';
+import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { TextInputField } from '../input-fields/TextInputField';
 
 interface PatientRegisterProps {
   onRegister: () => void;
 }
 
-// TODO remove alert and add validation messages to text fields
 export function PatientRegister(props: PatientRegisterProps) {
   const { registerAsPatient } = useMedikChainApi();
-  const [registered, setRegistered] = useState(false);
+  const { dispatchLoading, dispatchNotLoading } = useAppLoading();
+  const history = useHistory();
   const [name, setName] = useState('');
   const [nationalId, setNationalId] = useState('');
   const [gender, setGender] = useState('');
 
   const register = async () => {
+    dispatchLoading();
     await registerAsPatient(name, nationalId, gender);
-    alert('Registration completed!');
     props.onRegister();
-    setRegistered(true);
+    dispatchNotLoading();
+    alert('Registration completed!');
+    history.push('/');
   };
   const isValid = () => {
     return name.trim() && nationalId.trim() && gender.trim();
   };
-
-  if (registered) {
-    return <Redirect push to="/" />;
-  }
   return (
     <div>
       <TextInputField

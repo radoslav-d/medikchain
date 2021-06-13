@@ -1,4 +1,4 @@
 .backdrop-spinner {
-    z-index: 9999;
+    z-index: auto !important;
     color: #fff;
 }

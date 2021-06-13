@@ -4,12 +4,14 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { appEnv } from './app/env';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BackdropSpinner } from './components/backdrop-spinner/BackdropSpinner';
 import { Navbar } from './components/navbar/Navbar';
 import './App.css';
+import { useAppLoading } from './hooks/useAppLoading';
 
 export function App() {
   const { active, activate, error } = useWeb3React<JsonRpcProvider>();
-
+  const { isAppLoading } = useAppLoading();
   useEffect(() => {
     const activateConnector = async () => {
       const injectedConnector = new InjectedConnector({
@@ -25,7 +27,7 @@ export function App() {
     activateConnector();
   }, [active, activate, error]);
   if (!active) {
-    return <div>Loading...</div>;
+    return <div>Web3 is not loaded yet...</div>;
   }
   return (
     <div>
@@ -36,6 +38,7 @@ export function App() {
           </Route>
         </Switch>
       </BrowserRouter>
+      <BackdropSpinner opened={isAppLoading} />
     </div>
   );
 }

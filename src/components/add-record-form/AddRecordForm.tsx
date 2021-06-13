@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useAppLoading } from '../../hooks/useAppLoading';
 import { useIpfsClient } from '../../hooks/useIpfs';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { FileInputButton } from '../input-fields/FileInputButton';
@@ -17,6 +18,7 @@ export function AddRecordForm() {
   const { addMedicalRecord } = useMedikChainApi();
   const { uploadToIpfs } = useIpfsClient();
   const history = useHistory();
+  const { dispatchLoading, dispatchNotLoading } = useAppLoading();
   const { patientAddress } = useParams<{ patientAddress: string }>();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -31,6 +33,7 @@ export function AddRecordForm() {
     title && description && medicalCenter && isAddress(medicalCenter);
   const addRecord = async () => {
     const fileInfo = await getFileInfo();
+    dispatchLoading();
     await addMedicalRecord(
       patientAddress,
       account as string,
@@ -40,6 +43,7 @@ export function AddRecordForm() {
       tags,
       fileInfo
     );
+    dispatchNotLoading();
     alert('Record added successfully!');
     history.push(`/patient-records/${patientAddress}`);
   };

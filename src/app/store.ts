@@ -1,7 +1,10 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import loadingReducer from './appLoading';
 
 export const store = configureStore({
-  reducer: (state, action) => state, // TODO dummy reducer for now; remove when new reducer is implemented
+  reducer: {
+    loadingFlag: loadingReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

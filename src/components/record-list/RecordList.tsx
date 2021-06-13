@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { MedicalRecord } from '../../models/MedicalRecord';
 import { useParams } from 'react-router-dom';
-import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
 import { PatientAddressAccess } from '../patient-address-access/PatientAddressAccess';
 import { VirtualList } from '../virtual-list/VirtualList';
 import { RecordOverview } from './RecordOverview';
@@ -16,16 +16,17 @@ export function RecordList() {
   const { getMedicalRecords } = useMedikChainApi();
   const [medicalRecords, setMedicalRecords] = useState<MedicalRecord[]>([]);
   const { patientAddress } = useParams<{ patientAddress: string }>();
-  const [loading, setLoading] = useState(true);
+  const { dispatchLoading, dispatchNotLoading } = useAppLoading();
 
   useEffect(() => {
     const retrieveMedicalRecords = async () => {
+      dispatchLoading();
       const resultArray = await getMedicalRecords(patientAddress);
       setMedicalRecords(resultArray[0]);
-      setLoading(false);
+      dispatchNotLoading();
     };
     retrieveMedicalRecords();
-  }, [patientAddress, getMedicalRecords]);
+  }, [patientAddress]);
 
   return (
     <PatientAddressAccess patientRecordAddress={patientAddress}>
@@ -38,7 +39,6 @@ export function RecordList() {
           mapping={(r) => <RecordOverview key={r.id} medicalRecord={r} />}
           onEmptyList={<div>There are no records for this user</div>}
         />
-        <BackdropSpinner opened={loading} />
       </div>
     </PatientAddressAccess>
   );
