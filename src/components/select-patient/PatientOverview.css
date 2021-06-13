@@ -1,3 +1,7 @@
 .patient-secondary-info > div {
     margin-right: 8px;
 }
+
+.patient-item-action {
+    margin-right: 8px !important;
+}

@@ -1,18 +1,12 @@
 import {
   Chip,
-  IconButton,
+  Fab,
   ListItem,
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
 } from '@material-ui/core';
-import {
-  AddCircleOutline,
-  Fingerprint,
-  HowToReg,
-  List,
-  Wc,
-} from '@material-ui/icons';
+import { Add, Fingerprint, HowToReg, List, Wc } from '@material-ui/icons';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { PatientInfo } from '../../models/PatientInfo';
 import './PatientOverview.css';
@@ -38,12 +32,22 @@ export function PatientOverview(props: PatientOverviewProps) {
         secondary={<PatientSecondaryInfo patientInfo={props.patientInfo} />}
       />
       <ListItemSecondaryAction>
-        <IconButton onClick={onAdd}>
-          <AddCircleOutline color="primary" />
-        </IconButton>
-        <IconButton onClick={onView} edge="end">
-          <List color="primary" />
-        </IconButton>
+        <Fab
+          className="patient-item-action"
+          onClick={onAdd}
+          color="primary"
+          size="small"
+        >
+          <Add />
+        </Fab>
+        <Fab
+          className="patient-item-action"
+          onClick={onView}
+          color="primary"
+          size="small"
+        >
+          <List />
+        </Fab>
       </ListItemSecondaryAction>
     </ListItem>
   );
