@@ -5,6 +5,7 @@ import { useState } from 'react';
 interface TextInputFieldProps {
   placeholder: string;
   value: string;
+  className?: string;
   onChange?: (newValue: string) => void;
   required?: boolean;
   multiline?: boolean;
@@ -29,6 +30,7 @@ export function TextInputField(props: TextInputFieldProps) {
   };
   return (
     <TextField
+      className={props.className}
       label={props.placeholder}
       value={props.value}
       onChange={(e) => props.onChange && props.onChange(e.target.value)}

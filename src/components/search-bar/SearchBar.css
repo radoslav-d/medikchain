@@ -1,0 +1,14 @@
+.search-bar {
+    margin: 10px;
+}
+
+.search-button-wrapper {
+    padding: 10px;
+    display: inline-block;
+}
+
+.search-input {
+    min-width: 150px;
+    max-width: 300px;
+    width: 30vw;
+}

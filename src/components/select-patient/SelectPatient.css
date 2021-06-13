@@ -1,0 +1,13 @@
+.select-patient {
+    width: 40%;
+    margin: 2vh auto;
+}
+
+.select-patient-search > * {
+    display: flex;
+    justify-content: center;
+}
+
+.select-patient-list {
+
+}

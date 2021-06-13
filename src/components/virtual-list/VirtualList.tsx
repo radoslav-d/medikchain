@@ -1,12 +1,14 @@
 import { List } from '@material-ui/core';
 import { ReactNode, useMemo, useRef, useState } from 'react';
 
+export const DEFAULT_RENDER_BUFFER = 20;
+
 interface VirtualListProps<T> {
   data: T[];
   mapping: (item: T) => ReactNode;
-  renderBuffer: number;
   height: number;
   childHeight: number;
+  renderBuffer?: number;
   onEmptyList?: ReactNode;
 }
 
@@ -16,13 +18,14 @@ export function VirtualList<T>(props: VirtualListProps<T>) {
 
   const itemCount = props.data.length;
   const totalHeight = itemCount * props.childHeight;
+  const renderBuffer = props.renderBuffer || DEFAULT_RENDER_BUFFER;
   const startNode = Math.max(
     0,
-    Math.floor(scrollTop / props.childHeight) - props.renderBuffer
+    Math.floor(scrollTop / props.childHeight) - renderBuffer
   );
   const visibleNodeCount = Math.min(
     itemCount - startNode,
-    Math.ceil(props.height / props.childHeight) + 2 * props.renderBuffer
+    Math.ceil(props.height / props.childHeight) + 2 * renderBuffer
   );
   const offsetY = startNode * props.childHeight;
 

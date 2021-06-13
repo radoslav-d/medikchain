@@ -1,10 +1,12 @@
-import { Button } from '@material-ui/core';
+import { Search } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { PatientInfo } from '../../models/PatientInfo';
 import { RadioInputField } from '../input-fields/RadioInputField';
-import { TextInputField } from '../input-fields/TextInputField';
+import { SearchBar } from '../search-bar/SearchBar';
+import './SelectPatient.css';
+import { VirtualList } from '../virtual-list/VirtualList';
+import { PatientOverview } from './PatientOverview';
 
 enum SearchType {
   BY_NAME = 'name',
@@ -22,13 +24,14 @@ const SEARCH_OPTIONS = [
   },
 ];
 
+const LIST_ITEM_HEIGHT = 76;
+const VIRTUAL_LIST_HEIGHT = 500;
+
 export function SelectPatient() {
-  const [searchValue, setSearchValue] = useState('');
   const [patientsInfoCache, setPatientsInfoCache] = useState<PatientInfo[]>([]);
   const [patientsInfoView, setPatientsInfoView] = useState<PatientInfo[]>([]);
   const [searchType, setSearchType] = useState<string>(SearchType.BY_NAME);
   const { getPatientsInfo } = useMedikChainApi();
-  const match = useRouteMatch();
 
   useEffect(() => {
     const fetchPatientInfo = async () => {
@@ -38,55 +41,40 @@ export function SelectPatient() {
     fetchPatientInfo();
   }, [getPatientsInfo]);
 
-  const searchPatient = () => {
+  const searchPatient = (searchValue: string) => {
     const filteredPatients = patientsInfoCache.filter((patientInfo) =>
       // @ts-ignore
-      matchedSearchValue(patientInfo[searchType])
+      matchedSearchValue(searchValue, patientInfo[searchType])
     );
     setPatientsInfoView(filteredPatients);
   };
-  const matchedSearchValue = (property: string): boolean =>
+  const matchedSearchValue = (searchValue: string, property: string): boolean =>
     property === searchValue || property.includes(searchValue);
 
   return (
-    <div>
-      <TextInputField
-        placeholder="Search"
-        value={searchValue}
-        onChange={setSearchValue}
-        required
-      />
-      <RadioInputField
-        options={SEARCH_OPTIONS}
-        value={searchType}
-        onSelect={setSearchType}
-      />
-      <Button
-        onClick={searchPatient}
-        variant="contained"
-        color="primary"
-        disabled={searchValue.trim().length < 2}
-      >
-        Search
-      </Button>
-      <div>
-        {patientsInfoView.map((patientInfo) => (
-          <div key={patientInfo.id}>
-            <span>
-              {patientInfo.id} | {patientInfo.name} | {patientInfo.nationalId}
-            </span>
-            <Button variant="outlined">
-              <Link to={`${match.url}/new/${patientInfo.id}`}>
-                Add new medical record
-              </Link>
-            </Button>
-            <Button variant="outlined">
-              <Link to={`${match.url}/${patientInfo.id}`}>
-                Review medical history
-              </Link>
-            </Button>
-          </div>
-        ))}
+    <div className="select-patient">
+      <div className="select-patient-search">
+        <SearchBar
+          inputPlaceholder="Search"
+          buttonLabel="Search"
+          onSearch={searchPatient}
+          buttonIcon={<Search />}
+        />
+        <RadioInputField
+          options={SEARCH_OPTIONS}
+          value={searchType}
+          onSelect={setSearchType}
+        />
+      </div>
+      <div className="select-patient-list">
+        <VirtualList
+          data={patientsInfoView}
+          mapping={(patientInfo) => (
+            <PatientOverview key={patientInfo.id} patientInfo={patientInfo} />
+          )}
+          height={VIRTUAL_LIST_HEIGHT}
+          childHeight={LIST_ITEM_HEIGHT}
+        />
       </div>
     </div>
   );
