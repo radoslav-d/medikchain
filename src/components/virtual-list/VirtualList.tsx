@@ -7,6 +7,7 @@ interface VirtualListProps<T> {
   renderBuffer: number;
   height: number;
   childHeight: number;
+  onEmptyList?: ReactNode;
 }
 
 export function VirtualList<T>(props: VirtualListProps<T>) {
@@ -37,6 +38,9 @@ export function VirtualList<T>(props: VirtualListProps<T>) {
       setScrollTop(e.target.scrollTop);
     });
   };
+  if (!props.data.length && props.onEmptyList) {
+    return <div>{props.onEmptyList}</div>;
+  }
   return (
     <List
       style={{ height: props.height, overflow: 'auto' }}

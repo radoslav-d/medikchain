@@ -26521,12 +26521,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x25A3B3Ed3462d15fFBc4064AdCd48b63b9518cB8",
-      "transactionHash": "0x3413f8dd77ddfde06a7f8bd024ec98cc86e3f4f2f0b33e970b84fb36f8481e8a"
+      "address": "0xafFD68c629FDf3de95Cb09c79e9a084fd71fe623",
+      "transactionHash": "0x0ded1e124100583b23b8744efee33662dadb785bed5fd03495f1ced38db38999"
     }
   },
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-06-12T18:04:19.246Z",
+  "updatedAt": "2021-06-13T11:02:28.643Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "Radoslav Dimitrov",

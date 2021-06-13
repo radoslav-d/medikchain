@@ -3,7 +3,7 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { Button } from '@material-ui/core';
 import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useIpfsClient } from '../../hooks/useIpfs';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { FileInputButton } from '../input-fields/FileInputButton';
@@ -16,20 +16,16 @@ export function AddRecordForm() {
   const { account } = useWeb3React<JsonRpcProvider>();
   const { addMedicalRecord } = useMedikChainApi();
   const { uploadToIpfs } = useIpfsClient();
+  const history = useHistory();
   const { patientAddress } = useParams<{ patientAddress: string }>();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [medicalCenter, setMedicalCenter] = useState('');
   const [tags, setTags] = useState<string[]>([]);
-  const [fileName, setFileName] = useState<string>();
-  const [fileBuffer, setFileBuffer] = useState<Buffer>();
-  const [isAdded, setIsAdded] = useState(false);
+  const [file, setFile] = useState<{ fileName: string; fileBuffer: Buffer }>();
 
   if (!isAddress(patientAddress)) {
     return <NotFound />;
-  }
-  if (isAdded) {
-    return <Redirect to={`/patient-records/${patientAddress}`} />;
   }
   const isValid = () =>
     title && description && medicalCenter && isAddress(medicalCenter);
@@ -45,13 +41,12 @@ export function AddRecordForm() {
       fileInfo
     );
     alert('Record added successfully!');
-    setIsAdded(true);
+    history.push(`/patient-records/${patientAddress}`);
   };
   const getFileInfo = async (): Promise<string> => {
-    if (fileBuffer && fileName) {
-      const result = await uploadToIpfs(fileBuffer);
-      return `${result.path}:${fileName}`;
-      // const fileUrl = `https://ipfs.infura.io/ipfs/${result.path}`;
+    if (file) {
+      const result = await uploadToIpfs(file.fileBuffer);
+      return `${result.path}:${file.fileName}`;
     }
     return '';
   };
@@ -98,14 +93,13 @@ export function AddRecordForm() {
         }
       />
       <FileInputButton
-        onCapture={(fileName, fileBuffer) => {
-          setFileName(fileName);
-          setFileBuffer(fileBuffer);
-        }}
-        onUncapture={() => {
-          setFileName(undefined);
-          setFileBuffer(undefined);
-        }}
+        onCapture={(fileName, fileBuffer) =>
+          setFile({
+            fileName,
+            fileBuffer,
+          })
+        }
+        onUncapture={() => setFile(undefined)}
       />
       <Button onClick={addRecord} disabled={!isValid()}>
         Submit

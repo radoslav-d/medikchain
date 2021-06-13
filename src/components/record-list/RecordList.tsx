@@ -36,6 +36,7 @@ export function RecordList() {
           height={VIRTUAL_LIST_HEIGHT}
           data={medicalRecords}
           mapping={(r) => <RecordOverview key={r.id} medicalRecord={r} />}
+          onEmptyList={<div>There are no records for this user</div>}
         />
         <BackdropSpinner opened={loading} />
       </div>

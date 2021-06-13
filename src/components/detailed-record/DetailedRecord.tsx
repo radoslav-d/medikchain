@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Card,
-  CardActions,
-  CardContent,
-  Chip,
-  IconButton,
-} from '@material-ui/core';
-import { AssignmentReturned } from '@material-ui/icons';
+import { Card, CardActions, CardContent } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
@@ -14,6 +6,8 @@ import { getFormattedDate, MedicalRecord } from '../../models/MedicalRecord';
 import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
 import { NotFound } from '../not-found/NotFound';
 import { PatientAddressAccess } from '../patient-address-access/PatientAddressAccess';
+import { FileDownloader } from './FileDownloader';
+import { Tags } from './Tags';
 
 export function DetailedRecord() {
   const { getMedicalRecord } = useMedikChainApi();
@@ -50,39 +44,19 @@ export function DetailedRecord() {
             Medical center address: {record?.medicalCenter}
           </CardContent>
           <CardContent>{record && getFormattedDate(record)}</CardContent>
-          <CardContent>
-            <Tags tags={record?.tags} />
-          </CardContent>
+          {record?.tags && (
+            <CardContent>
+              <Tags tags={record?.tags} />
+            </CardContent>
+          )}
           {record?.attachment && (
-            <CardActions disableSpacing>
-              <IconButton>
-                <AssignmentReturned />
-              </IconButton>
-              <u>{record?.attachment}</u>
+            <CardActions>
+              <FileDownloader fileInfo={record.attachment} />
             </CardActions>
           )}
         </Card>
         <BackdropSpinner opened={loading} />
       </div>
     </PatientAddressAccess>
-  );
-}
-
-function Tags(props: { tags: string[] | undefined }) {
-  if (!props.tags) {
-    return null;
-  }
-  return (
-    <div>
-      {props.tags.map((tag) => (
-        <Chip
-          key={tag}
-          avatar={<Avatar>#</Avatar>}
-          label={tag}
-          color="primary"
-          variant="outlined"
-        />
-      ))}
-    </div>
   );
 }
