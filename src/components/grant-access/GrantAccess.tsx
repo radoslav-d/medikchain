@@ -1,10 +1,12 @@
 import { isAddress } from '@ethersproject/address';
 import { parseEther } from '@ethersproject/units';
-import { Button } from '@material-ui/core';
+import { Fab, Typography } from '@material-ui/core';
+import { Edit, FlashOn } from '@material-ui/icons';
 import { useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { TextInputField } from '../input-fields/TextInputField';
+import './GrantAccess.css';
 
 const EDIT_ACCESS_GRANT_ETHER_COST = '1';
 const ADMIN_ACCESS_GRANT_ETHER_COST = '2';
@@ -45,20 +47,47 @@ export function GrantAccess() {
     return !isAddress(userAddress);
   };
   return (
-    <div>
-      <TextInputField
-        placeholder="User address"
-        value={userAddress}
-        onChange={setUserAddress}
-        required
-        address
-      />
-      <Button onClick={addEditAccess} disabled={shouldDisableButton()}>
-        Grant edit access
-      </Button>
-      <Button onClick={addAdminAccess} disabled={shouldDisableButton()}>
-        Grant admin access
-      </Button>
+    <div className="grant-access">
+      <Typography
+        className="grant-access-description"
+        variant="h5"
+        color="primary"
+      >
+        Authorize other users to view and edit personal data by granting them
+        edit access. You can also delegate administration rights by granting
+        admin access.
+      </Typography>
+      <div className="grant-access-actions">
+        <TextInputField
+          className="grant-access-address-input"
+          placeholder="User address"
+          value={userAddress}
+          onChange={setUserAddress}
+          address
+        />
+        <Fab
+          className="grant-access-button"
+          variant="extended"
+          size="medium"
+          color="primary"
+          onClick={addEditAccess}
+          disabled={shouldDisableButton()}
+        >
+          <Edit />
+          Grant edit access
+        </Fab>
+        <Fab
+          className="grant-access-button"
+          variant="extended"
+          size="medium"
+          color="secondary"
+          onClick={addAdminAccess}
+          disabled={shouldDisableButton()}
+        >
+          <FlashOn />
+          Grant admin access
+        </Fab>
+      </div>
     </div>
   );
 }
