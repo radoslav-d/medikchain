@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
@@ -25,7 +26,7 @@ const SEARCH_OPTIONS = [
 ];
 
 const LIST_ITEM_HEIGHT = 76;
-const VIRTUAL_LIST_HEIGHT = 500;
+const VIRTUAL_LIST_HEIGHT = 450;
 
 export function SelectPatient() {
   const [patientsInfoCache, setPatientsInfoCache] = useState<PatientInfo[]>([]);
@@ -53,6 +54,14 @@ export function SelectPatient() {
 
   return (
     <div className="select-patient">
+      <Typography
+        className="select-patient-description"
+        color="primary"
+        variant="h5"
+      >
+        Find patients, so you can add new medical records or review the existing
+        ones.
+      </Typography>
       <div className="select-patient-search">
         <SearchBar
           inputPlaceholder="Search"

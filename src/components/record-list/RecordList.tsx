@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Paper, Typography } from '@material-ui/core';
 import { Delete, FilterList } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
@@ -69,14 +69,26 @@ export function RecordList() {
             Clear filter
           </Button>
         </div>
-        <VirtualList
-          childHeight={LIST_ITEM_HEIGHT}
-          height={VIRTUAL_LIST_HEIGHT}
-          data={medicalRecordsView}
-          mapping={(r) => <RecordOverview key={r.id} medicalRecord={r} />}
-          onEmptyList={<div>There are no records found</div>}
-        />
+        <Paper elevation={2}>
+          <VirtualList
+            childHeight={LIST_ITEM_HEIGHT}
+            height={VIRTUAL_LIST_HEIGHT}
+            data={medicalRecordsView}
+            mapping={(r) => <RecordOverview key={r.id} medicalRecord={r} />}
+            onEmptyList={<NoRecordsFound />}
+          />
+        </Paper>
       </div>
     </PatientAddressAccess>
+  );
+}
+
+function NoRecordsFound() {
+  return (
+    <Paper elevation={2} className="no-records-found">
+      <Typography variant="subtitle1" color="secondary">
+        There are no records found
+      </Typography>
+    </Paper>
   );
 }

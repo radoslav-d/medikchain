@@ -1,13 +1,13 @@
 .select-patient {
-    width: 40%;
-    margin: 2vh auto;
+    width: 60%;
+    margin: 5vh auto;
+}
+
+.select-patient-description {
+    text-align: center;
 }
 
 .select-patient-search > * {
     display: flex;
     justify-content: center;
-}
-
-.select-patient-list {
-
 }

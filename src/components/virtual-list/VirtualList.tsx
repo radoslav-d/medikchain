@@ -42,7 +42,16 @@ export function VirtualList<T>(props: VirtualListProps<T>) {
     });
   };
   if (!props.data.length && props.onEmptyList) {
-    return <div>{props.onEmptyList}</div>;
+    return (
+      <div
+        style={{
+          textAlign: 'center',
+          height: props.height,
+        }}
+      >
+        {props.onEmptyList}
+      </div>
+    );
   }
   return (
     <List
