@@ -1,8 +1,7 @@
 import { isAddress } from '@ethersproject/address';
-import { JsonRpcProvider } from '@ethersproject/providers';
-import { useWeb3React } from '@web3-react/core';
 import { ReactChild, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useAccount } from '../../hooks/useAccount';
 import { useUserRole } from '../../hooks/useUserRole';
 import { canEdit } from '../../models/UserRole';
 import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
@@ -15,7 +14,7 @@ interface PatientAddressAccessProps {
 }
 
 export function PatientAddressAccess(props: PatientAddressAccessProps) {
-  const { account } = useWeb3React<JsonRpcProvider>();
+  const { account } = useAccount();
   const { role, updateUserRole } = useUserRole();
   const [loading, setLoading] = useState(true);
 

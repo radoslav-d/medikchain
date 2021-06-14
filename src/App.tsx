@@ -3,11 +3,10 @@ import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { appEnv } from './app/env';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { BackdropSpinner } from './components/backdrop-spinner/BackdropSpinner';
-import { Navbar } from './components/navbar/Navbar';
 import './App.css';
 import { useAppLoading } from './hooks/useAppLoading';
+import { Router } from './Router';
 
 export function App() {
   const { active, activate, error } = useWeb3React<JsonRpcProvider>();
@@ -31,13 +30,7 @@ export function App() {
   }
   return (
     <div>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/">
-            <Navbar />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <Router />
       <BackdropSpinner opened={isAppLoading} />
     </div>
   );

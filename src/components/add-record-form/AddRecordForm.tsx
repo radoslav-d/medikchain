@@ -1,9 +1,8 @@
 import { isAddress } from '@ethersproject/address';
-import { JsonRpcProvider } from '@ethersproject/providers';
 import { Button } from '@material-ui/core';
-import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useAccount } from '../../hooks/useAccount';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useIpfsClient } from '../../hooks/useIpfs';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
@@ -14,7 +13,7 @@ import { NotFound } from '../not-found/NotFound';
 import './AddRecordForm.css';
 
 export function AddRecordForm() {
-  const { account } = useWeb3React<JsonRpcProvider>();
+  const { account } = useAccount();
   const { addMedicalRecord } = useMedikChainApi();
   const { uploadToIpfs } = useIpfsClient();
   const history = useHistory();
