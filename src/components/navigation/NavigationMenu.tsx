@@ -4,11 +4,12 @@ import {
   MeetingRoom,
   Person,
   SupervisedUserCircle,
+  Home as HomeIcon,
 } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
 import { UserRole } from '../../models/UserRole';
-import { MenuOption } from './NavigationMenuOptions';
+import { NavigationMenuOption } from './NavigationMenuOptions';
 
 interface NavigationMenuProps {
   role: UserRole;
@@ -32,7 +33,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
   };
 
   const registerOption = (
-    <MenuOption
+    <NavigationMenuOption
       key={MenuOptionKeys.REGISTER}
       label="Register as patient"
       onSelect={() => onOptionSelected('/register')}
@@ -40,7 +41,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
     />
   );
   const reviewPersonalDataOption = (
-    <MenuOption
+    <NavigationMenuOption
       key={MenuOptionKeys.VIEW_PERSONAL_DATA}
       label="Your medical data"
       onSelect={() => onOptionSelected(`/patient-records/${account}`)}
@@ -48,7 +49,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
     />
   );
   const managePatientDataOption = (
-    <MenuOption
+    <NavigationMenuOption
       key={MenuOptionKeys.MANAGE_PATIENT_DATA}
       label="View or add patient medical records"
       onSelect={() => onOptionSelected('/patient-records')}
@@ -57,7 +58,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
   );
 
   const giveRightsOption = (
-    <MenuOption
+    <NavigationMenuOption
       key={MenuOptionKeys.GIVE_ACCESS_RIGHTS}
       label="Give access to a user"
       onSelect={() => onOptionSelected('/give-access')}
@@ -90,6 +91,11 @@ export function NavigationMenu(props: NavigationMenuProps) {
       open={!!props.anchorElement}
       onClose={props.closeCallback}
     >
+      <NavigationMenuOption
+        label="Home"
+        onSelect={() => onOptionSelected('/')}
+        icon={<HomeIcon />}
+      />
       {getRoleOptions()}
     </Menu>
   );

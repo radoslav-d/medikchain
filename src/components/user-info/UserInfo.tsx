@@ -1,31 +1,28 @@
-import { JsonRpcProvider } from '@ethersproject/providers';
-import { useWeb3React } from '@web3-react/core';
+import { Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
+import { useAccount } from '../../hooks/useAccount';
 import { UserRole } from '../../models/UserRole';
+import './UserInfo.css';
 
 interface UserInfoProps {
   userRole: UserRole;
 }
 
 export function UserInfo(props: UserInfoProps) {
-  const { account, library } = useWeb3React<JsonRpcProvider>();
-  const [balance, setBalance] = useState('');
+  const { account, getBalance } = useAccount();
+  const [balance, setBalance] = useState<string>();
 
   useEffect(() => {
-    const getBalance = async () => {
-      if (account) {
-        const balanceResult = await library?.getBalance(account as string);
-        setBalance(String(balanceResult));
-      }
-    };
-    getBalance();
-  }, [account, library]);
+    getBalance().then(setBalance);
+  }, [account, getBalance]);
   return (
-    <span>
-      <span>Your are logged as {props.userRole} | </span>
-      <span>
+    <div className="user-info">
+      <Typography variant="subtitle1">
+        Your are logged as {props.userRole}
+      </Typography>
+      <Typography variant="subtitle2">
         account: {account} | balance: {balance}
-      </span>
-    </span>
+      </Typography>
+    </div>
   );
 }
