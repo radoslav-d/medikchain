@@ -1,5 +1,6 @@
 import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import { ReactNode } from 'react';
+import { UserRole } from '../../models/UserRole';
 
 interface NavigationMenuOptionProps {
   onSelect: () => void;
@@ -15,3 +16,31 @@ export function NavigationMenuOption(props: NavigationMenuOptionProps) {
     </MenuItem>
   );
 }
+
+export enum MenuOptionKeys {
+  REGISTER,
+  VIEW_PERSONAL_DATA,
+  MANAGE_PATIENT_DATA,
+  GIVE_ACCESS_RIGHTS,
+}
+
+export const getOptionsForUserRole = (role: UserRole) => {
+  switch (role) {
+    case UserRole.ADMINISTRATOR:
+      return [
+        MenuOptionKeys.VIEW_PERSONAL_DATA,
+        MenuOptionKeys.MANAGE_PATIENT_DATA,
+        MenuOptionKeys.GIVE_ACCESS_RIGHTS,
+      ];
+    case UserRole.PHYSICIAN:
+      return [
+        MenuOptionKeys.VIEW_PERSONAL_DATA,
+        MenuOptionKeys.MANAGE_PATIENT_DATA,
+      ];
+    case UserRole.PATIENT:
+      return [MenuOptionKeys.VIEW_PERSONAL_DATA];
+    case UserRole.GUEST:
+    default:
+      return [MenuOptionKeys.REGISTER];
+  }
+};

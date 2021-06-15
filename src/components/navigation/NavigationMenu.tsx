@@ -6,10 +6,15 @@ import {
   SupervisedUserCircle,
   Home as HomeIcon,
 } from '@material-ui/icons';
+import { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
 import { UserRole } from '../../models/UserRole';
-import { NavigationMenuOption } from './NavigationMenuOptions';
+import {
+  getOptionsForUserRole,
+  MenuOptionKeys,
+  NavigationMenuOption,
+} from './NavigationMenuOptions';
 
 interface NavigationMenuProps {
   role: UserRole;
@@ -17,86 +22,62 @@ interface NavigationMenuProps {
   closeCallback?: () => void;
 }
 
-enum MenuOptionKeys {
-  REGISTER,
-  VIEW_PERSONAL_DATA,
-  MANAGE_PATIENT_DATA,
-  GIVE_ACCESS_RIGHTS,
-}
-
 export function NavigationMenu(props: NavigationMenuProps) {
   const history = useHistory();
   const { account } = useAccount();
-  const onOptionSelected = (navigateTo: string) => {
-    props.closeCallback && props.closeCallback();
-    history.push(navigateTo);
-  };
+  const { role, anchorElement, closeCallback } = props;
 
-  const registerOption = (
-    <NavigationMenuOption
-      key={MenuOptionKeys.REGISTER}
-      label="Register as patient"
-      onSelect={() => onOptionSelected('/register')}
-      icon={<MeetingRoom />}
-    />
-  );
-  const reviewPersonalDataOption = (
-    <NavigationMenuOption
-      key={MenuOptionKeys.VIEW_PERSONAL_DATA}
-      label="Your medical data"
-      onSelect={() => onOptionSelected(`/patient-records/${account}`)}
-      icon={<Person />}
-    />
-  );
-  const managePatientDataOption = (
-    <NavigationMenuOption
-      key={MenuOptionKeys.MANAGE_PATIENT_DATA}
-      label="View or add patient medical records"
-      onSelect={() => onOptionSelected('/patient-records')}
-      icon={<SupervisedUserCircle />}
-    />
+  const onOptionSelected = useCallback(
+    (navigateTo: string) => {
+      closeCallback && closeCallback();
+      history.push(navigateTo);
+    },
+    [history, closeCallback]
   );
 
-  const giveRightsOption = (
-    <NavigationMenuOption
-      key={MenuOptionKeys.GIVE_ACCESS_RIGHTS}
-      label="Give access to a user"
-      onSelect={() => onOptionSelected('/give-access')}
-      icon={<LockOpen />}
-    />
-  );
-
-  const getRoleOptions = () => {
-    switch (props.role) {
-      case UserRole.ADMINISTRATOR:
-        return [
-          reviewPersonalDataOption,
-          managePatientDataOption,
-          giveRightsOption,
-        ];
-      case UserRole.PHYSICIAN:
-        return [reviewPersonalDataOption, managePatientDataOption];
-      case UserRole.PATIENT:
-        return [reviewPersonalDataOption];
-      case UserRole.GUEST:
-      default:
-        return [registerOption];
-    }
-  };
-
+  const menuOptionsData = useMemo(() => {
+    return {
+      [MenuOptionKeys.REGISTER]: {
+        label: 'Register as patient',
+        onSelect: () => onOptionSelected('/register'),
+        icon: <MeetingRoom />,
+      },
+      [MenuOptionKeys.VIEW_PERSONAL_DATA]: {
+        label: 'Your medical data',
+        onSelect: () => onOptionSelected(`/patient-records/${account}`),
+        icon: <Person />,
+      },
+      [MenuOptionKeys.MANAGE_PATIENT_DATA]: {
+        label: 'View or add patient medical records',
+        onSelect: () => onOptionSelected('/patient-records'),
+        icon: <SupervisedUserCircle />,
+      },
+      [MenuOptionKeys.GIVE_ACCESS_RIGHTS]: {
+        label: 'Give access to a user',
+        onSelect: () => onOptionSelected('/give-access'),
+        icon: <LockOpen />,
+      },
+    };
+  }, [account, closeCallback]);
   return (
     <Menu
-      anchorEl={props.anchorElement}
+      anchorEl={anchorElement}
       keepMounted
-      open={!!props.anchorElement}
-      onClose={props.closeCallback}
+      open={!!anchorElement}
+      onClose={closeCallback}
     >
       <NavigationMenuOption
         label="Home"
         onSelect={() => onOptionSelected('/')}
         icon={<HomeIcon />}
       />
-      {getRoleOptions()}
+      {getOptionsForUserRole(role).map((key) => (
+        <NavigationMenuOption
+          label={menuOptionsData[key].label}
+          onSelect={menuOptionsData[key].onSelect}
+          icon={menuOptionsData[key].icon}
+        />
+      ))}
     </Menu>
   );
 }
