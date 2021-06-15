@@ -6,10 +6,10 @@ import { useAccount } from '../../hooks/useAccount';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useIpfsClient } from '../../hooks/useIpfs';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { FileInputButton } from '../input-fields/FileInputButton';
-import { TagInputField } from '../input-fields/TagInputField';
-import { TextInputField } from '../input-fields/TextInputField';
-import { NotFound } from '../not-found/NotFound';
+import { FileInputButton } from '../../components/Inputs/FileInputButton';
+import { TagInputField } from '../../components/Inputs/TagInputField';
+import { TextInputField } from '../../components/Inputs/TextInputField';
+import { NotFound } from '../../components/NotFound/NotFound';
 import './AddRecordForm.css';
 
 export function AddRecordForm() {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { useHistory } from 'react-router-dom';
-import { TextInputField } from '../input-fields/TextInputField';
+import { TextInputField } from '../../components/Inputs/TextInputField';
 import './PatientRegister.css';
 
 interface PatientRegisterProps {

@@ -7,7 +7,8 @@ import {
 } from '@material-ui/core';
 import { EventNote, OpenInNew } from '@material-ui/icons';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { getFormattedDate, MedicalRecord } from '../../models/MedicalRecord';
+import { getFormattedDate } from '../../lib/helpers/DateHelper';
+import { MedicalRecord } from '../../lib/types/MedicalRecord';
 
 export function RecordOverview(props: { medicalRecord: MedicalRecord }) {
   const match = useRouteMatch();

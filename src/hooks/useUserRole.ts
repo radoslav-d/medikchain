@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { UserRole } from '../models/UserRole';
+import { UserRole } from '../lib/types/UserRole';
 import { useMedikChainApi } from './useMedikChainApi';
 
 export function useUserRole(): { role: UserRole; updateUserRole: () => Promise<void> } {

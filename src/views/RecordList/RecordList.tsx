@@ -3,11 +3,11 @@ import { Delete, FilterList } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { MedicalRecord } from '../../models/MedicalRecord';
+import { MedicalRecord } from '../../lib/types/MedicalRecord';
 import { useParams } from 'react-router-dom';
-import { PatientAddressAccess } from '../patient-address-access/PatientAddressAccess';
-import { SearchBar } from '../search-bar/SearchBar';
-import { VirtualList } from '../virtual-list/VirtualList';
+import { PatientAddressAccess } from '../../components/PatientAddressAccess/PatientAddressAccess';
+import { SearchBar } from '../../components/SearchBar/SearchBar';
+import { VirtualList } from '../../components/VirtualList/VirtualList';
 import { RecordOverview } from './RecordOverview';
 import './RecordList.css';
 

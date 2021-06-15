@@ -5,7 +5,7 @@ import { Edit, FlashOn } from '@material-ui/icons';
 import { useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { TextInputField } from '../input-fields/TextInputField';
+import { TextInputField } from '../../components/Inputs/TextInputField';
 import './GrantAccess.css';
 
 const EDIT_ACCESS_GRANT_ETHER_COST = '1';

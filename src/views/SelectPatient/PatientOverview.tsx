@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { Add, Fingerprint, HowToReg, List, Wc } from '@material-ui/icons';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { PatientInfo } from '../../models/PatientInfo';
+import { PatientInfo } from '../../lib/types/PatientInfo';
 import './PatientOverview.css';
 
 interface PatientOverviewProps {

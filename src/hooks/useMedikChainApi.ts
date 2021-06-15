@@ -1,4 +1,4 @@
-import { MedikChainApi } from '../models/MedikChainApi';
+import { MedikChainApi } from '../lib/types/MedikChainApi';
 import MedikChainAbi from '../contracts/MedikChain.json';
 import { useContract } from './useContract';
 

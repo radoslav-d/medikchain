@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { getFormattedDate, MedicalRecord } from '../../models/MedicalRecord';
-import { NotFound } from '../not-found/NotFound';
-import { PatientAddressAccess } from '../patient-address-access/PatientAddressAccess';
+import { getFormattedDate } from '../../lib/helpers/DateHelper';
+import { MedicalRecord } from '../../lib/types/MedicalRecord';
+import { NotFound } from '../../components/NotFound/NotFound';
+import { PatientAddressAccess } from '../../components/PatientAddressAccess/PatientAddressAccess';
 import { FileDownloader } from './FileDownloader';
 import { Tags } from './Tags';
 

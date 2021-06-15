@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { appEnv } from './app/env';
-import { BackdropSpinner } from './components/backdrop-spinner/BackdropSpinner';
+import { BackdropSpinner } from './components/BackdropSpinner/BackdropSpinner';
 import './App.css';
 import { useAppLoading } from './hooks/useAppLoading';
 import { Router } from './Router';

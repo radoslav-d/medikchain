@@ -8,7 +8,7 @@ import { Menu as MenuIcon } from '@material-ui/icons';
 import { useEffect, useState, MouseEvent } from 'react';
 import { useAccount } from '../../hooks/useAccount';
 import { useUserRole } from '../../hooks/useUserRole';
-import { UserInfo } from '../user-info/UserInfo';
+import { UserInfo } from '../UserInfo/UserInfo';
 import { NavigationMenu } from './NavigationMenu';
 import './Navigation.css';
 

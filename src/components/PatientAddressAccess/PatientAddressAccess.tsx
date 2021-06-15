@@ -3,9 +3,9 @@ import { ReactChild, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
 import { useUserRole } from '../../hooks/useUserRole';
-import { canEdit } from '../../models/UserRole';
-import { BackdropSpinner } from '../backdrop-spinner/BackdropSpinner';
-import { NotFound } from '../not-found/NotFound';
+import { canEdit } from '../../lib/helpers/UserRoleHelper';
+import { BackdropSpinner } from '../BackdropSpinner/BackdropSpinner';
+import { NotFound } from '../NotFound/NotFound';
 
 interface PatientAddressAccessProps {
   patientRecordAddress: string;

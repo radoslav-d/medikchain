@@ -1,9 +1,4 @@
-export enum UserRole {
-  GUEST = 'Guest',
-  PATIENT = 'Patient',
-  PHYSICIAN = 'Physician',
-  ADMINISTRATOR = 'Administrator',
-}
+import { UserRole } from '../types/UserRole';
 
 export function canEdit(role: UserRole): boolean {
   switch (role) {

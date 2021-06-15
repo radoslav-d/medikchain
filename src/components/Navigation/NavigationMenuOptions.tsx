@@ -1,6 +1,6 @@
 import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import { ReactNode } from 'react';
-import { UserRole } from '../../models/UserRole';
+import { UserRole } from '../../lib/types/UserRole';
 
 interface NavigationMenuOptionProps {
   onSelect: () => void;

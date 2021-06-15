@@ -9,7 +9,7 @@ import {
 import { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
-import { UserRole } from '../../models/UserRole';
+import { UserRole } from '../../lib/types/UserRole';
 import {
   getOptionsForUserRole,
   MenuOptionKeys,

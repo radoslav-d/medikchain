@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { AddRecordForm } from './components/add-record-form/AddRecordForm';
-import { DetailedRecord } from './components/detailed-record/DetailedRecord';
-import { GrantAccess } from './components/grant-access/GrantAccess';
-import { Home } from './components/home/Home';
-import { Navigation } from './components/navigation/Navigation';
-import { PatientRegister } from './components/patient-register/PatientRegister';
-import { PrivateRoute } from './components/private-route/PrivateRoute';
-import { RecordList } from './components/record-list/RecordList';
-import { SelectPatient } from './components/select-patient/SelectPatient';
+import { canEdit } from './lib/helpers/UserRoleHelper';
+import { AddRecordForm } from './views/AddRecordForm/AddRecordForm';
+import { DetailedRecord } from './views/DetailedRecord/DetailedRecord';
+import { GrantAccess } from './views/GrantAccess/GrantAccess';
+import { Home } from './views/Home/Home';
+import { Navigation } from './components/Navigation/Navigation';
+import { PatientRegister } from './views/PatientRegister/PatientRegister';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
+import { RecordList } from './views/RecordList/RecordList';
+import { SelectPatient } from './views/SelectPatient/SelectPatient';
 import { useUserRole } from './hooks/useUserRole';
-import { canEdit, UserRole } from './models/UserRole';
+import { UserRole } from './lib/types/UserRole';
 
 export function Router() {
   const { role, updateUserRole } = useUserRole();

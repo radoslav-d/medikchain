@@ -2,11 +2,11 @@ import { Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { PatientInfo } from '../../models/PatientInfo';
-import { RadioInputField } from '../input-fields/RadioInputField';
-import { SearchBar } from '../search-bar/SearchBar';
+import { PatientInfo } from '../../lib/types/PatientInfo';
+import { RadioInputField } from '../../components/Inputs/RadioInputField';
+import { SearchBar } from '../../components/SearchBar/SearchBar';
 import './SelectPatient.css';
-import { VirtualList } from '../virtual-list/VirtualList';
+import { VirtualList } from '../../components/VirtualList/VirtualList';
 import { PatientOverview } from './PatientOverview';
 
 enum SearchType {

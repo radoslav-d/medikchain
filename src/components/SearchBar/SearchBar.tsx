@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import { ReactNode, useState } from 'react';
-import { TextInputField } from '../input-fields/TextInputField';
+import { TextInputField } from '../Inputs/TextInputField';
 import './SearchBar.css';
 
 interface SearchBarProps {
