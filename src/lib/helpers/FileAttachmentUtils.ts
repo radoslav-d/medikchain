@@ -4,7 +4,6 @@ import { FileAttachment } from '../types/FileAttachment';
 
 const ipfsUploadUrl = appEnv().mandatory.ipfsUploadUrl;
 const ipfsDownloadUrl = appEnv().mandatory.ipfsDownloadUrl;
-const ipfsClient = create({ url: ipfsUploadUrl });
 
 export const uploadFromDevice = (
   file: File,
@@ -19,6 +18,7 @@ export const uploadFromDevice = (
 };
 
 export const uploadToIpfs = async (file: FileAttachment) => {
+  const ipfsClient = create({ url: ipfsUploadUrl });
   const addResult = await ipfsClient.add(file.buffer);
   file.ipfsPath = addResult.path;
   return `${file.ipfsPath}:${file.name}`;

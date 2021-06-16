@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent } from '@material-ui/core';
+import { Card, CardActions, CardContent, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppLoading } from '../../hooks/useAppLoading';
@@ -7,8 +7,9 @@ import { getFormattedDate } from '../../lib/helpers/DateHelper';
 import { MedicalRecord } from '../../lib/types/MedicalRecord';
 import { NotFound } from '../../components/NotFound/NotFound';
 import { PatientAddressAccess } from '../../components/PatientAddressAccess/PatientAddressAccess';
-import { FileDownloader } from './FileDownloader';
+import { FileDownloadButton } from '../../components/Inputs/FileDownloadButton';
 import { Tags } from './Tags';
+import './DetailedRecord.css';
 
 export function DetailedRecord() {
   const { getMedicalRecord } = useMedikChainApi();
@@ -35,29 +36,43 @@ export function DetailedRecord() {
   if (!isRecordIdValid()) {
     return <NotFound />;
   }
+
+  const secondaryContent = [
+    record && getFormattedDate(record),
+    `Patient address: ${record?.patient}`,
+    `Physician address: ${record?.physician}`,
+    `Medical center address: ${record?.medicalCenter}`,
+  ];
+
   return (
     <PatientAddressAccess patientRecordAddress={patientAddress}>
-      <div>
-        <Card>
-          <CardContent>{record?.title}</CardContent>
-          <CardContent>{record?.description}</CardContent>
-          <CardContent>Physician address: {record?.physician}</CardContent>
+      <Card className="detailed-record">
+        <CardContent>
+          <Typography variant="h4" color="primary">
+            {record?.title}
+          </Typography>
+        </CardContent>
+        <CardContent>
+          {secondaryContent.map((data) => (
+            <Typography variant="subtitle1" color="primary">
+              {data}
+            </Typography>
+          ))}
+        </CardContent>
+        <CardContent>
+          <Typography variant="body1">{record?.description}</Typography>
+        </CardContent>
+        {record?.tags && (
           <CardContent>
-            Medical center address: {record?.medicalCenter}
+            <Tags tags={record?.tags} />
           </CardContent>
-          <CardContent>{record && getFormattedDate(record)}</CardContent>
-          {record?.tags && (
-            <CardContent>
-              <Tags tags={record?.tags} />
-            </CardContent>
-          )}
-          {record?.attachment && (
-            <CardActions>
-              <FileDownloader fileInfo={record.attachment} />
-            </CardActions>
-          )}
-        </Card>
-      </div>
+        )}
+        {record?.attachment && (
+          <CardActions>
+            <FileDownloadButton fileInfo={record.attachment} />
+          </CardActions>
+        )}
+      </Card>
     </PatientAddressAccess>
   );
 }

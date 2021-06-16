@@ -5,13 +5,13 @@ import { useAppLoading } from '../../hooks/useAppLoading';
 import { uploadFromDevice } from '../../lib/helpers/FileAttachmentUtils';
 import { FileAttachment } from '../../lib/types/FileAttachment';
 
-interface FileInputButtonProps {
+interface FileUploadButtonProps {
   onCapture: (file: FileAttachment) => void;
   onUncapture?: () => void;
   className?: string;
 }
 
-export function FileInputButton(props: FileInputButtonProps) {
+export function FileUploadButton(props: FileUploadButtonProps) {
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
   const [fileName, setFileName] = useState<string>();
 

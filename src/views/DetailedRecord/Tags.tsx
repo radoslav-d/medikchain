@@ -9,6 +9,7 @@ export function Tags(props: TagsProps) {
     <div>
       {props.tags.map((tag) => (
         <Chip
+          className="record-tag"
           key={tag}
           avatar={<Avatar>#</Avatar>}
           label={tag}

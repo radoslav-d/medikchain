@@ -6,7 +6,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
-import { FileInputButton } from '../../components/Inputs/FileInputButton';
+import { FileUploadButton } from '../../components/Inputs/FileUploadButton';
 import { TagInputField } from '../../components/Inputs/TagInputField';
 import { TextInputField } from '../../components/Inputs/TextInputField';
 import { NotFound } from '../../components/NotFound/NotFound';
@@ -106,7 +106,7 @@ export function AddRecordForm() {
           setTags((prevTags) => prevTags.filter((t) => t !== tag))
         }
       />
-      <FileInputButton
+      <FileUploadButton
         className="add-record-form-item upload-file-button"
         onCapture={setFile}
         onUncapture={() => setFile(undefined)}
