@@ -73,6 +73,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
       />
       {getOptionsForUserRole(role).map((key) => (
         <NavigationMenuOption
+          key={key}
           label={menuOptionsData[key].label}
           onSelect={menuOptionsData[key].onSelect}
           icon={menuOptionsData[key].icon}

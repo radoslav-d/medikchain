@@ -1,3 +1,4 @@
+import { isAddress } from '@ethersproject/address';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Delete, FilterList } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
@@ -33,7 +34,9 @@ export function RecordList() {
       setMedicalRecordsView(resultArray[0]);
       dispatchNotLoading();
     };
-    retrieveMedicalRecords();
+    if (isAddress(patientAddress)) {
+      retrieveMedicalRecords();
+    }
   }, [patientAddress]);
 
   const searchRecord = (searchValue: string) => {

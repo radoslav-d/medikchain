@@ -1,3 +1,4 @@
+import { isAddress } from '@ethersproject/address';
 import { Card, CardActions, CardContent, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -18,7 +19,8 @@ export function DetailedRecord() {
   const [record, setRecord] = useState<MedicalRecord>();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
 
-  const isRecordIdValid = () => !isNaN(+medicalRecordId);
+  const isRecordIdValid = () =>
+    !isNaN(+medicalRecordId) && isAddress(patientAddress);
 
   useEffect(() => {
     const retrieveRecordInfo = async () => {
