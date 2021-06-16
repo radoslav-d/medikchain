@@ -1,0 +1,44 @@
+{
+  "en": [
+    {
+      "variant": "h1",
+      "className": "left-aligned-text",
+      "content": "Welcome to Medikchain!"
+    },
+    {
+      "variant": "h5",
+      "className": "right-aligned-text with-margin",
+      "content": "Medikchain is a decentralized application, which can be used for tracking medical records."
+    },
+    {
+      "variant": "h4",
+      "className": "left-aligned-text with-margin",
+      "content": "The underlying Ethereum blockchain provides immutability and security."
+    },
+    {
+      "variant": "h2",
+      "className": "right-aligned-text with-margin",
+      "content": "Rely on privacy!"
+    },
+    {
+      "variant": "h5",
+      "className": "left-aligned-text with-margin",
+      "content": "Medikchain allows doctors and physicians to obtain the most vital information and do what is best for you."
+    },
+    {
+      "variant": "h4",
+      "className": "right-aligned-text with-margin",
+      "content": "New medical records are handled in a secure and optimal way."
+    },
+    {
+      "variant": "h3",
+      "className": "left-aligned-text with-margin",
+      "content": "No more misunderstandings!"
+    },
+    {
+      "variant": "h2",
+      "className": "right-aligned-text with-margin",
+      "content": "Once persisted, information in Medikchain cannot be manipulated."
+    }
+  ]
+}
