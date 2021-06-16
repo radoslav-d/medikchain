@@ -1,4 +1,4 @@
-import { Button, Fab } from '@material-ui/core';
+import { Button, Fab, Tooltip } from '@material-ui/core';
 import { AttachFile, Delete } from '@material-ui/icons';
 import { ChangeEvent, useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
@@ -35,26 +35,33 @@ export function FileUploadButton(props: FileUploadButtonProps) {
   return (
     <div className={props.className}>
       <label style={{ marginRight: '10px' }}>
-        <Fab
-          color="secondary"
-          variant="extended"
-          component="span"
-          size="medium"
-        >
-          <AttachFile />
-          Upload
-        </Fab>
+        <Tooltip title="Select file to upload as attachment" placement="top">
+          <Fab
+            color="secondary"
+            variant="extended"
+            component="span"
+            size="medium"
+          >
+            <AttachFile />
+            Upload
+          </Fab>
+        </Tooltip>
         <input type="file" hidden onChange={captureFile} />
       </label>
       {fileName && (
-        <Button
-          color="secondary"
-          size="small"
-          endIcon={<Delete />}
-          onClick={uncaptureFile}
+        <Tooltip
+          title="This file is captured. Click to discard it."
+          placement="top"
         >
-          <u>{fileName}</u>
-        </Button>
+          <Button
+            color="secondary"
+            size="small"
+            endIcon={<Delete />}
+            onClick={uncaptureFile}
+          >
+            <u>{fileName}</u>
+          </Button>
+        </Tooltip>
       )}
     </div>
   );

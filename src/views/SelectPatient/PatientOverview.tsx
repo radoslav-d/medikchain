@@ -5,6 +5,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  Tooltip,
 } from '@material-ui/core';
 import { Add, Fingerprint, HowToReg, List, Wc } from '@material-ui/icons';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -32,22 +33,32 @@ export function PatientOverview(props: PatientOverviewProps) {
         secondary={<PatientSecondaryInfo patientInfo={props.patientInfo} />}
       />
       <ListItemSecondaryAction>
-        <Fab
-          className="patient-item-action"
-          onClick={onAdd}
-          color="primary"
-          size="small"
+        <Tooltip
+          title="Add new medical record for this patient"
+          placement="left"
         >
-          <Add />
-        </Fab>
-        <Fab
-          className="patient-item-action"
-          onClick={onView}
-          color="primary"
-          size="small"
+          <Fab
+            className="patient-item-action"
+            onClick={onAdd}
+            color="primary"
+            size="small"
+          >
+            <Add />
+          </Fab>
+        </Tooltip>
+        <Tooltip
+          title="Review medical records for this patient"
+          placement="right"
         >
-          <List />
-        </Fab>
+          <Fab
+            className="patient-item-action"
+            onClick={onView}
+            color="primary"
+            size="small"
+          >
+            <List />
+          </Fab>
+        </Tooltip>
       </ListItemSecondaryAction>
     </ListItem>
   );

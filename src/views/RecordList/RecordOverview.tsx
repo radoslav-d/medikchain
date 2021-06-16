@@ -4,6 +4,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  Tooltip,
 } from '@material-ui/core';
 import { EventNote, OpenInNew } from '@material-ui/icons';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -27,9 +28,11 @@ export function RecordOverview(props: { medicalRecord: MedicalRecord }) {
         secondary={getFormattedDate(props.medicalRecord)}
       />
       <ListItemSecondaryAction>
-        <IconButton edge="end" onClick={openDetailedView}>
-          <OpenInNew />
-        </IconButton>
+        <Tooltip title="Display detailed view for this record">
+          <IconButton edge="end" onClick={openDetailedView}>
+            <OpenInNew />
+          </IconButton>
+        </Tooltip>
       </ListItemSecondaryAction>
     </ListItem>
   );

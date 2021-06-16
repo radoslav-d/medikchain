@@ -1,4 +1,4 @@
-import { Fab } from '@material-ui/core';
+import { Fab, Tooltip } from '@material-ui/core';
 import { GetApp } from '@material-ui/icons';
 import {
   downloadFromIpfs,
@@ -17,15 +17,17 @@ export function FileDownloadButton(props: FileDownloadButtonProps) {
   const { fileName, ipfsPath } = parsedFileInfo;
   return (
     <div>
-      <Fab
-        variant="extended"
-        onClick={() => downloadFromIpfs(fileName, ipfsPath)}
-        size="medium"
-        color="primary"
-      >
-        <GetApp />
-        <u style={{ marginLeft: '10px' }}>{fileName}</u>
-      </Fab>
+      <Tooltip title="Download this file on your device">
+        <Fab
+          variant="extended"
+          onClick={() => downloadFromIpfs(fileName, ipfsPath)}
+          size="medium"
+          color="primary"
+        >
+          <GetApp />
+          <u style={{ marginLeft: '10px' }}>{fileName}</u>
+        </Fab>
+      </Tooltip>
     </div>
   );
 }
