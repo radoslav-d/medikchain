@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { Web3ReactProvider } from '@web3-react/core';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { App } from './App';
-import { store } from './app/store';
-import { appEnv } from './app/env';
+import { store } from './state/store';
+import { appEnv } from './state/env';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 

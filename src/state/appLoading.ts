@@ -7,15 +7,16 @@ const loadingSlice = createSlice({
     isLoading: false,
   },
   reducers: {
-    loading: (state) => {
+    setLoading: (state) => {
       state.isLoading = true;
     },
-    notLoading: (state) => {
+    setNotLoading: (state) => {
       state.isLoading = false;
     },
   },
 });
 
-export const { loading, notLoading } = loadingSlice.actions;
-export const selectLoading = (state: RootState) => state.loadingFlag.isLoading;
+export const { setLoading, setNotLoading } = loadingSlice.actions;
+export const selectLoading = (state: RootState) =>
+  state.loadingReducer.isLoading;
 export default loadingSlice.reducer;

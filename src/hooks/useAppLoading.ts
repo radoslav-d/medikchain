@@ -1,10 +1,10 @@
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { loading, notLoading, selectLoading } from '../app/appLoading';
+import { selectLoading, setLoading, setNotLoading } from '../state/appLoading';
+import { useAppDispatch, useAppSelector } from '../state/hooks';
 
 export function useAppLoading() {
   const dispatch = useAppDispatch();
   const isAppLoading = useAppSelector(selectLoading);
-  const dispatchLoading = () => dispatch(loading());
-  const dispatchNotLoading = () => dispatch(notLoading());
+  const dispatchLoading = () => dispatch(setLoading());
+  const dispatchNotLoading = () => dispatch(setNotLoading());
   return { isAppLoading, dispatchLoading, dispatchNotLoading };
 }

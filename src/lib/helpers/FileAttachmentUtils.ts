@@ -1,5 +1,5 @@
 import { create } from 'ipfs-http-client';
-import { appEnv } from '../../app/env';
+import { appEnv } from '../../state/env';
 import { FileAttachment } from '../types/FileAttachment';
 
 const ipfsUploadUrl = appEnv().mandatory.ipfsUploadUrl;
