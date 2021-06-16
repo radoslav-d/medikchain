@@ -1,11 +1,14 @@
-import { Button } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Button, Fab } from '@material-ui/core';
+import { AttachFile, Delete } from '@material-ui/icons';
 import { ChangeEvent, useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
+import { uploadFromDevice } from '../../lib/helpers/FileAttachmentUtils';
+import { FileAttachment } from '../../lib/types/FileAttachment';
 
 interface FileInputButtonProps {
-  onCapture: (fileName: string, fileBuffer: Buffer) => void;
+  onCapture: (file: FileAttachment) => void;
   onUncapture?: () => void;
+  className?: string;
 }
 
 export function FileInputButton(props: FileInputButtonProps) {
@@ -16,39 +19,38 @@ export function FileInputButton(props: FileInputButtonProps) {
     const files = event.target.files;
     if (files && files[0]) {
       dispatchLoading();
-      setFileName(files[0].name);
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(files[0]);
-      reader.onloadend = () => {
-        const buffer = new Buffer(reader.result as ArrayBuffer);
-        props.onCapture(files[0].name, buffer);
-        dispatchNotLoading();
-      };
+      const name = files[0].name;
+      uploadFromDevice(files[0], (buffer) => {
+        props.onCapture({ name, buffer });
+      });
+      setFileName(name);
+      dispatchNotLoading();
     }
   };
+
   const uncaptureFile = () => {
     props.onUncapture && props.onUncapture();
     setFileName(undefined);
   };
   return (
-    <div>
-      <input
-        id="contained-button-file"
-        type="file"
-        hidden
-        onChange={captureFile}
-      />
-      <label htmlFor="contained-button-file">
-        <Button variant="contained" component="span">
+    <div className={props.className}>
+      <label style={{ marginRight: '10px' }}>
+        <Fab
+          color="secondary"
+          variant="extended"
+          component="span"
+          size="medium"
+        >
+          <AttachFile />
           Upload
-        </Button>
+        </Fab>
+        <input type="file" hidden onChange={captureFile} />
       </label>
       {fileName && (
         <Button
           color="secondary"
-          variant="outlined"
           size="small"
-          endIcon={<DeleteIcon />}
+          endIcon={<Delete />}
           onClick={uncaptureFile}
         >
           <u>{fileName}</u>

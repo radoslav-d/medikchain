@@ -1,3 +1,17 @@
 .add-record-form {
-    display: inline-grid;
+    min-width: 400px;
+    width: 50%;
+    margin: 5vh auto 2vh auto;
+    padding: 15px;
+    text-align: center;
+}
+
+.add-record-form-item {
+    width: 80%;
+    margin: 15px !important;
+}
+
+.upload-file-button {
+    display: inline-flex;
+    text-align: left;
 }

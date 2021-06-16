@@ -1,23 +1,23 @@
 import { IconButton } from '@material-ui/core';
 import { AssignmentReturned } from '@material-ui/icons';
-import { useIpfsClient } from '../../hooks/useIpfs';
+import {
+  downloadFromIpfs,
+  parseFileSummary,
+} from '../../lib/helpers/FileAttachmentUtils';
 
 interface FileDownloaderProps {
   fileInfo: string;
 }
 
 export function FileDownloader(props: FileDownloaderProps) {
-  const { downloadFromIpfs } = useIpfsClient();
-  const fileParts = props.fileInfo.split(':');
-  if (fileParts.length !== 2) {
+  const parsedFileInfo = parseFileSummary(props.fileInfo);
+  if (!parsedFileInfo) {
     return null;
   }
-  const filePath = fileParts[0];
-  const fileName = fileParts[1];
-
+  const { fileName, ipfsPath } = parsedFileInfo;
   return (
     <div>
-      <IconButton onClick={() => downloadFromIpfs(fileName, filePath)}>
+      <IconButton onClick={() => downloadFromIpfs(fileName, ipfsPath)}>
         <AssignmentReturned />
       </IconButton>
       <u>{fileName}</u>
