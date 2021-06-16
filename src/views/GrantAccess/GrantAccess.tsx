@@ -5,6 +5,7 @@ import { Edit, FlashOn } from '@material-ui/icons';
 import { useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
+import { useNotifications } from '../../hooks/useNotifications';
 import { TextInputField } from '../../components/Inputs/TextInputField';
 import './GrantAccess.css';
 
@@ -14,6 +15,7 @@ const ADMIN_ACCESS_GRANT_ETHER_COST = '2';
 export function GrantAccess() {
   const { grantEditAccess, grantAdminAccess } = useMedikChainApi();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
+  const { pushErrorNotification, pushSuccessNotification } = useNotifications();
   const [userAddress, setUserAddress] = useState('');
 
   const grantAccess = async (
@@ -22,12 +24,17 @@ export function GrantAccess() {
     message: string
   ) => {
     dispatchLoading();
-    await contractFunction(userAddress, {
-      value: parseEther(etherValue),
-    });
-    dispatchNotLoading();
-    alert(message);
-    setUserAddress('');
+    try {
+      await contractFunction(userAddress, {
+        value: parseEther(etherValue),
+      });
+      pushSuccessNotification(message);
+      setUserAddress('');
+    } catch (e) {
+      pushErrorNotification('Error occurred when granting access');
+    } finally {
+      dispatchNotLoading();
+    }
   };
   const addAdminAccess = async () => {
     await grantAccess(

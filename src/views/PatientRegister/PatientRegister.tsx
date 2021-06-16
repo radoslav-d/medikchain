@@ -4,6 +4,7 @@ import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { useHistory } from 'react-router-dom';
 import { TextInputField } from '../../components/Inputs/TextInputField';
+import { useNotifications } from '../../hooks/useNotifications';
 import './PatientRegister.css';
 
 interface PatientRegisterProps {
@@ -14,16 +15,22 @@ export function PatientRegister(props: PatientRegisterProps) {
   const { registerAsPatient } = useMedikChainApi();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
   const history = useHistory();
+  const { pushSuccessNotification, pushErrorNotification } = useNotifications();
   const [name, setName] = useState('');
   const [nationalId, setNationalId] = useState('');
   const [gender, setGender] = useState('');
 
   const register = async () => {
     dispatchLoading();
-    await registerAsPatient(name, nationalId, gender);
-    props.onRegister();
+    try {
+      await registerAsPatient(name, nationalId, gender);
+      props.onRegister();
+      pushSuccessNotification('Registration successful!');
+    } catch (e) {
+      console.error(e);
+      pushErrorNotification('Error occurred during registration');
+    }
     dispatchNotLoading();
-    alert('Registration completed!');
     history.push('/');
   };
   const isValid = () => {

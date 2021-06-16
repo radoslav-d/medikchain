@@ -1,3 +1,4 @@
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -18,7 +19,12 @@ ReactDOM.render(
   <React.StrictMode>
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
-        <App />
+        <SnackbarProvider
+          maxSnack={5}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        >
+          <App />
+        </SnackbarProvider>
       </Provider>
     </Web3ReactProvider>
   </React.StrictMode>,

@@ -10,6 +10,7 @@ import { FileUploadButton } from '../../components/Inputs/FileUploadButton';
 import { TagInputField } from '../../components/Inputs/TagInputField';
 import { TextInputField } from '../../components/Inputs/TextInputField';
 import { NotFound } from '../../components/NotFound/NotFound';
+import { useNotifications } from '../../hooks/useNotifications';
 import { uploadToIpfs } from '../../lib/helpers/FileAttachmentUtils';
 import { FileAttachment } from '../../lib/types/FileAttachment';
 import './AddRecordForm.css';
@@ -19,6 +20,7 @@ export function AddRecordForm() {
   const { addMedicalRecord } = useMedikChainApi();
   const history = useHistory();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
+  const { pushErrorNotification, pushSuccessNotification } = useNotifications();
   const { patientAddress } = useParams<{ patientAddress: string }>();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -35,18 +37,22 @@ export function AddRecordForm() {
 
   const addRecord = async () => {
     dispatchLoading();
-    const fileSummary = await uploadFile();
-    await addMedicalRecord(
-      patientAddress,
-      account as string,
-      title,
-      description,
-      medicalCenter,
-      tags,
-      fileSummary
-    );
+    try {
+      const fileSummary = await uploadFile();
+      await addMedicalRecord(
+        patientAddress,
+        account as string,
+        title,
+        description,
+        medicalCenter,
+        tags,
+        fileSummary
+      );
+      pushSuccessNotification('Record added successfully');
+    } catch (e) {
+      pushErrorNotification('Error occurred when adding record');
+    }
     dispatchNotLoading();
-    alert('Record added successfully!');
     history.push(`/patient-records/${patientAddress}`);
   };
   const uploadFile = async () => {
