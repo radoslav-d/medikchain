@@ -26,7 +26,7 @@ export enum MenuOptionKeys {
 
 export const getOptionsForUserRole = (role: UserRole) => {
   switch (role) {
-    case UserRole.ADMINISTRATOR:
+    case UserRole.ADMIN:
       return [
         MenuOptionKeys.VIEW_PERSONAL_DATA,
         MenuOptionKeys.MANAGE_PATIENT_DATA,

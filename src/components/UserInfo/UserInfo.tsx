@@ -1,6 +1,7 @@
 import { Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useAccount } from '../../hooks/useAccount';
+import { useTranslator } from '../../hooks/useTranslator';
 import { UserRole } from '../../lib/types/UserRole';
 import './UserInfo.css';
 
@@ -10,6 +11,7 @@ interface UserInfoProps {
 
 export function UserInfo(props: UserInfoProps) {
   const { account, getBalance } = useAccount();
+  const { translate } = useTranslator();
   const [balance, setBalance] = useState<string>();
 
   useEffect(() => {
@@ -18,10 +20,12 @@ export function UserInfo(props: UserInfoProps) {
   return (
     <div className="user-info">
       <Typography variant="subtitle1">
-        Your are logged as {props.userRole}
+        {`${translate('user-info.logged-as')} ${translate(`user-roles.${props.userRole}`)}`}
       </Typography>
       <Typography variant="subtitle2">
-        account: {account} | balance: {balance}
+        {`${translate('user-info.account')}: ${account} | ${translate(
+          'user-info.balance'
+        )}: ${balance}`}
       </Typography>
     </div>
   );

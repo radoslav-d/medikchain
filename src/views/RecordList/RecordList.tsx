@@ -4,6 +4,7 @@ import { Delete, FilterList } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
+import { useTranslator } from '../../hooks/useTranslator';
 import { MedicalRecord } from '../../lib/types/MedicalRecord';
 import { useParams } from 'react-router-dom';
 import { PatientAddressAccess } from '../../components/PatientAddressAccess/PatientAddressAccess';
@@ -25,6 +26,7 @@ export function RecordList() {
   );
   const { patientAddress } = useParams<{ patientAddress: string }>();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
+  const { translate } = useTranslator();
 
   useEffect(() => {
     const retrieveMedicalRecords = async () => {
@@ -56,8 +58,8 @@ export function RecordList() {
       <div className="record-list">
         <div className="record-list-search">
           <SearchBar
-            inputPlaceholder="Search by tags"
-            buttonLabel="Filter"
+            inputPlaceholder={translate('input-labels.search-tags')}
+            buttonLabel={translate('input-labels.filter-button')}
             onSearch={searchRecord}
             buttonIcon={<FilterList />}
           />
@@ -69,7 +71,7 @@ export function RecordList() {
             }}
             onClick={() => setMedicalRecordsView(medicalRecordsCache)}
           >
-            Clear filter
+            {translate('input-labels.clear-filter-button')}
           </Button>
         </div>
         <Paper elevation={2}>
@@ -87,10 +89,11 @@ export function RecordList() {
 }
 
 function NoRecordsFound() {
+  const { translate } = useTranslator();
   return (
     <Paper elevation={2} className="no-records-found">
       <Typography variant="subtitle1" color="secondary">
-        There are no records found
+        {translate('view-labels.no-records')}
       </Typography>
     </Paper>
   );

@@ -8,6 +8,7 @@ import { useMedikChainApi } from '../../hooks/useMedikChainApi';
 import { useNotifications } from '../../hooks/useNotifications';
 import { TextInputField } from '../../components/Inputs/TextInputField';
 import './GrantAccess.css';
+import { useTranslator } from '../../hooks/useTranslator';
 
 const EDIT_ACCESS_GRANT_ETHER_COST = '1';
 const ADMIN_ACCESS_GRANT_ETHER_COST = '2';
@@ -15,6 +16,7 @@ const ADMIN_ACCESS_GRANT_ETHER_COST = '2';
 export function GrantAccess() {
   const { grantEditAccess, grantAdminAccess } = useMedikChainApi();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
+  const { translate } = useTranslator();
   const { pushErrorNotification, pushSuccessNotification } = useNotifications();
   const [userAddress, setUserAddress] = useState('');
 
@@ -31,7 +33,7 @@ export function GrantAccess() {
       pushSuccessNotification(message);
       setUserAddress('');
     } catch (e) {
-      pushErrorNotification('Error occurred when granting access');
+      pushErrorNotification('notifications.grant-access-error');
     } finally {
       dispatchNotLoading();
     }
@@ -40,14 +42,14 @@ export function GrantAccess() {
     await grantAccess(
       grantAdminAccess,
       ADMIN_ACCESS_GRANT_ETHER_COST,
-      'Admin access granted!'
+      'notifications.grant-admin-access-success'
     );
   };
   const addEditAccess = async () => {
     await grantAccess(
       grantEditAccess,
       EDIT_ACCESS_GRANT_ETHER_COST,
-      'Edit access granted!'
+      'notifications.grant-edit-access-success'
     );
   };
   const shouldDisableButton = () => {
@@ -60,14 +62,12 @@ export function GrantAccess() {
         variant="h5"
         color="primary"
       >
-        Authorize other users to view and edit personal data by granting them
-        edit access. You can also delegate administration rights by granting
-        admin access.
+        {translate('view-labels.grant-access')}
       </Typography>
       <div className="grant-access-actions">
         <TextInputField
           className="grant-access-address-input"
-          placeholder="User address"
+          placeholder={translate('input-labels.user-address')}
           value={userAddress}
           onChange={setUserAddress}
           address
@@ -81,7 +81,7 @@ export function GrantAccess() {
           disabled={shouldDisableButton()}
         >
           <Edit />
-          Grant edit access
+          {translate('input-labels.grant-edit-access-button')}
         </Fab>
         <Fab
           className="grant-access-button"
@@ -92,7 +92,7 @@ export function GrantAccess() {
           disabled={shouldDisableButton()}
         >
           <FlashOn />
-          Grant admin access
+          {translate('input-labels.grant-admin-access-button')}
         </Fab>
       </div>
     </div>

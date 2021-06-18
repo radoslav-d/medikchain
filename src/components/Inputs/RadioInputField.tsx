@@ -1,4 +1,5 @@
 import { FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { useTranslator } from '../../hooks/useTranslator';
 
 interface RadioInputFieldOption {
   label: string;
@@ -13,6 +14,7 @@ interface RadioInputFieldProps {
 }
 
 export function RadioInputField(props: RadioInputFieldProps) {
+  const { translate } = useTranslator();
   return (
     <RadioGroup
       className={props.className}
@@ -23,7 +25,7 @@ export function RadioInputField(props: RadioInputFieldProps) {
       {props.options.map((option) => (
         <FormControlLabel
           key={option.value}
-          label={option.label}
+          label={translate(option.label)}
           value={option.value}
           control={<Radio />}
         />

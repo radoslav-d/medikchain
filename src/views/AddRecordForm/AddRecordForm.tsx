@@ -11,12 +11,14 @@ import { TagInputField } from '../../components/Inputs/TagInputField';
 import { TextInputField } from '../../components/Inputs/TextInputField';
 import { NotFound } from '../../components/NotFound/NotFound';
 import { useNotifications } from '../../hooks/useNotifications';
+import { useTranslator } from '../../hooks/useTranslator';
 import { uploadToIpfs } from '../../lib/helpers/FileAttachmentUtils';
 import { FileAttachment } from '../../lib/types/FileAttachment';
 import './AddRecordForm.css';
 
 export function AddRecordForm() {
   const { account } = useAccount();
+  const { translate } = useTranslator();
   const { addMedicalRecord } = useMedikChainApi();
   const history = useHistory();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
@@ -48,9 +50,9 @@ export function AddRecordForm() {
         tags,
         fileSummary
       );
-      pushSuccessNotification('Record added successfully');
+      pushSuccessNotification('notifications.add-record-success');
     } catch (e) {
-      pushErrorNotification('Error occurred when adding record');
+      pushErrorNotification('notifications.add-record-error');
     }
     dispatchNotLoading();
     history.push(`/patient-records/${patientAddress}`);
@@ -64,18 +66,18 @@ export function AddRecordForm() {
   return (
     <div className="add-record-form">
       <Typography variant="h6" color="primary">
-        Fill in a new medical record
+        {translate('view-labels.add-record')}
       </Typography>
       <TextInputField
         className="add-record-form-item"
-        placeholder="Title"
+        placeholder={translate('input-labels.title')}
         value={title}
         onChange={setTitle}
         required
       />
       <TextInputField
         className="add-record-form-item"
-        placeholder="Description"
+        placeholder={translate('input-labels.description')}
         value={description}
         onChange={setDescription}
         required
@@ -83,21 +85,21 @@ export function AddRecordForm() {
       />
       <TextInputField
         className="add-record-form-item"
-        placeholder="Patient address"
+        placeholder={translate('input-labels.patient-address')}
         value={patientAddress}
         address
         disabled
       />
       <TextInputField
         className="add-record-form-item"
-        placeholder="Physician address"
+        placeholder={translate('input-labels.physician-address')}
         value={account as string}
         address
         disabled
       />
       <TextInputField
         className="add-record-form-item"
-        placeholder="Medical center address"
+        placeholder={translate('input-labels.medical-center-address')}
         value={medicalCenter}
         onChange={setMedicalCenter}
         address
@@ -105,7 +107,7 @@ export function AddRecordForm() {
       />
       <TagInputField
         className="add-record-form-item"
-        placeholder="Tags"
+        placeholder={translate('input-labels.tags')}
         tags={tags}
         onAdd={(tag) => setTags((prevTags) => [...prevTags, tag])}
         onDelete={(tag, index) =>
@@ -125,7 +127,7 @@ export function AddRecordForm() {
         disabled={!isValid()}
         endIcon={<Send />}
       >
-        Submit
+        {translate('input-labels.submit-button')}
       </Button>
     </div>
   );

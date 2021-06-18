@@ -1,13 +1,10 @@
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { useEffect, useState, MouseEvent } from 'react';
 import { useAccount } from '../../hooks/useAccount';
+import { useTranslator } from '../../hooks/useTranslator';
 import { useUserRole } from '../../hooks/useUserRole';
+import { LanguageSwitch } from '../LanguageSwitch/LanguageSwitch';
 import { UserInfo } from '../UserInfo/UserInfo';
 import { NavigationMenu } from './NavigationMenu';
 import './Navigation.css';
@@ -16,6 +13,7 @@ export function Navigation() {
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
   const { role, updateUserRole } = useUserRole();
   const { account } = useAccount();
+  const { translate } = useTranslator();
   useEffect(() => {
     updateUserRole();
   }, [role, updateUserRole, account]);
@@ -34,7 +32,7 @@ export function Navigation() {
             <MenuIcon />
           </IconButton>
           <Typography className="navigation-title" variant="h6">
-            Medikchain
+            {translate('navigation.title')}
           </Typography>
           <NavigationMenu
             role={role}
@@ -42,6 +40,7 @@ export function Navigation() {
             closeCallback={closeMenu}
           />
           <UserInfo userRole={role} />
+          <LanguageSwitch />
         </Toolbar>
       </AppBar>
     </div>

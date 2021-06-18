@@ -45,7 +45,7 @@ export function Router() {
         <PrivateRoute
           path="/give-access"
           redirectPath="/"
-          callback={() => role === UserRole.ADMINISTRATOR}
+          callback={() => role === UserRole.ADMIN}
         >
           <GrantAccess />
         </PrivateRoute>

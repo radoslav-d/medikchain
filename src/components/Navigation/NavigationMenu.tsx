@@ -9,6 +9,7 @@ import {
 import { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
+import { useTranslator } from '../../hooks/useTranslator';
 import { UserRole } from '../../lib/types/UserRole';
 import {
   getOptionsForUserRole,
@@ -25,6 +26,7 @@ interface NavigationMenuProps {
 export function NavigationMenu(props: NavigationMenuProps) {
   const history = useHistory();
   const { account } = useAccount();
+  const { translate } = useTranslator();
   const { role, anchorElement, closeCallback } = props;
 
   const onOptionSelected = useCallback(
@@ -38,22 +40,22 @@ export function NavigationMenu(props: NavigationMenuProps) {
   const menuOptionsData = useMemo(() => {
     return {
       [MenuOptionKeys.REGISTER]: {
-        label: 'Register as patient',
+        label: 'navigation.register',
         onSelect: () => onOptionSelected('/register'),
         icon: <MeetingRoom />,
       },
       [MenuOptionKeys.VIEW_PERSONAL_DATA]: {
-        label: 'Your medical data',
+        label: 'navigation.your-data',
         onSelect: () => onOptionSelected(`/patient-records/${account}`),
         icon: <Person />,
       },
       [MenuOptionKeys.MANAGE_PATIENT_DATA]: {
-        label: 'View or add patient medical records',
+        label: 'navigation.manage-data',
         onSelect: () => onOptionSelected('/patient-records'),
         icon: <SupervisedUserCircle />,
       },
       [MenuOptionKeys.GIVE_ACCESS_RIGHTS]: {
-        label: 'Give access to a user',
+        label: 'navigation.give-access',
         onSelect: () => onOptionSelected('/give-access'),
         icon: <LockOpen />,
       },
@@ -67,14 +69,14 @@ export function NavigationMenu(props: NavigationMenuProps) {
       onClose={closeCallback}
     >
       <NavigationMenuOption
-        label="Home"
+        label={translate('navigation.home')}
         onSelect={() => onOptionSelected('/')}
         icon={<HomeIcon />}
       />
       {getOptionsForUserRole(role).map((key) => (
         <NavigationMenuOption
           key={key}
-          label={menuOptionsData[key].label}
+          label={translate(menuOptionsData[key].label)}
           onSelect={menuOptionsData[key].onSelect}
           icon={menuOptionsData[key].icon}
         />

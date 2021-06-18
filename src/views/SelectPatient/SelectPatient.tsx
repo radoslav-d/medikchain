@@ -2,6 +2,7 @@ import { Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
+import { useTranslator } from '../../hooks/useTranslator';
 import { PatientInfo } from '../../lib/types/PatientInfo';
 import { RadioInputField } from '../../components/Inputs/RadioInputField';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
@@ -16,11 +17,11 @@ enum SearchType {
 
 const SEARCH_OPTIONS = [
   {
-    label: 'Search by name',
+    label: 'input-labels.search-name-radio',
     value: SearchType.BY_NAME,
   },
   {
-    label: 'Search by national ID',
+    label: 'input-labels.search-id-radio',
     value: SearchType.BY_NATIONAL_ID,
   },
 ];
@@ -33,6 +34,7 @@ export function SelectPatient() {
   const [patientsInfoView, setPatientsInfoView] = useState<PatientInfo[]>([]);
   const [searchType, setSearchType] = useState<string>(SearchType.BY_NAME);
   const { getPatientsInfo } = useMedikChainApi();
+  const { translate } = useTranslator();
 
   useEffect(() => {
     const fetchPatientInfo = async () => {
@@ -59,13 +61,12 @@ export function SelectPatient() {
         color="primary"
         variant="h5"
       >
-        Find patients, so you can add new medical records or review the existing
-        ones.
+        {translate('view-labels.select-patient')}
       </Typography>
       <div className="select-patient-search">
         <SearchBar
-          inputPlaceholder="Search"
-          buttonLabel="Search"
+          inputPlaceholder={translate('input-labels.search')}
+          buttonLabel={translate('input-labels.search')}
           onSearch={searchPatient}
           buttonIcon={<Search />}
         />

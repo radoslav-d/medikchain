@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
+import { useTranslator } from '../../hooks/useTranslator';
 import { getFormattedDate } from '../../lib/helpers/DateHelper';
 import { MedicalRecord } from '../../lib/types/MedicalRecord';
 import { NotFound } from '../../components/NotFound/NotFound';
@@ -18,6 +19,7 @@ export function DetailedRecord() {
     useParams<{ patientAddress: string; medicalRecordId: string }>();
   const [record, setRecord] = useState<MedicalRecord>();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
+  const { translate } = useTranslator();
 
   const isRecordIdValid = () =>
     !isNaN(+medicalRecordId) && isAddress(patientAddress);
@@ -41,9 +43,11 @@ export function DetailedRecord() {
 
   const secondaryContent = [
     record && getFormattedDate(record),
-    `Patient address: ${record?.patient}`,
-    `Physician address: ${record?.physician}`,
-    `Medical center address: ${record?.medicalCenter}`,
+    `${translate('input-labels.patient-address')}: ${record?.patient}`,
+    `${translate('input-labels.physician-address')}: ${record?.physician}`,
+    `${translate('input-labels.medical-center-address')}: ${
+      record?.medicalCenter
+    }`,
   ];
 
   return (

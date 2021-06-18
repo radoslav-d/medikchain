@@ -13,7 +13,7 @@ export function useUserRole(): { role: UserRole; updateUserRole: () => Promise<v
   const updateUserRole = async () => {
     const admin = await isAdmin();
     if (admin) {
-      setRole(UserRole.ADMINISTRATOR);
+      setRole(UserRole.ADMIN);
       return;
     }
     const editor = await isEditor();

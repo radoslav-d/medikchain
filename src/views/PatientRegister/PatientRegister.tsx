@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { TextInputField } from '../../components/Inputs/TextInputField';
 import { useNotifications } from '../../hooks/useNotifications';
 import './PatientRegister.css';
+import { useTranslator } from '../../hooks/useTranslator';
 
 interface PatientRegisterProps {
   onRegister: () => void;
@@ -14,6 +15,7 @@ interface PatientRegisterProps {
 export function PatientRegister(props: PatientRegisterProps) {
   const { registerAsPatient } = useMedikChainApi();
   const { dispatchLoading, dispatchNotLoading } = useAppLoading();
+  const { translate } = useTranslator();
   const history = useHistory();
   const { pushSuccessNotification, pushErrorNotification } = useNotifications();
   const [name, setName] = useState('');
@@ -25,10 +27,9 @@ export function PatientRegister(props: PatientRegisterProps) {
     try {
       await registerAsPatient(name, nationalId, gender);
       props.onRegister();
-      pushSuccessNotification('Registration successful!');
+      pushSuccessNotification('notifications.register-success');
     } catch (e) {
-      console.error(e);
-      pushErrorNotification('Error occurred during registration');
+      pushErrorNotification('notifications.register-error');
     }
     dispatchNotLoading();
     history.push('/');
@@ -41,21 +42,21 @@ export function PatientRegister(props: PatientRegisterProps) {
       <form>
         <TextInputField
           className="register-form-item"
-          placeholder="Patient name"
+          placeholder={translate('input-labels.patient-name')}
           value={name}
           onChange={setName}
           required
         />
         <TextInputField
           className="register-form-item"
-          placeholder="National ID number"
+          placeholder={translate('input-labels.national-id')}
           value={nationalId}
           onChange={setNationalId}
           required
         />
         <TextInputField
           className="register-form-item"
-          placeholder="Gender"
+          placeholder={translate('input-labels.patient-gender')}
           value={gender}
           onChange={setGender}
           required
@@ -67,7 +68,7 @@ export function PatientRegister(props: PatientRegisterProps) {
           onClick={register}
           disabled={!isValid()}
         >
-          Register
+          {translate('input-labels.register-button')}
         </Button>
       </form>
     </Paper>

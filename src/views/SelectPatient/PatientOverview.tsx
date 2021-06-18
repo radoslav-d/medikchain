@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { Add, Fingerprint, HowToReg, List, Wc } from '@material-ui/icons';
 import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useTranslator } from '../../hooks/useTranslator';
 import { PatientInfo } from '../../lib/types/PatientInfo';
 import './PatientOverview.css';
 
@@ -19,6 +20,7 @@ interface PatientOverviewProps {
 export function PatientOverview(props: PatientOverviewProps) {
   const history = useHistory();
   const match = useRouteMatch();
+  const { translate } = useTranslator();
 
   const onAdd = () => history.push(`${match.url}/new/${props.patientInfo.id}`);
   const onView = () => history.push(`${match.url}/${props.patientInfo.id}`);
@@ -33,10 +35,7 @@ export function PatientOverview(props: PatientOverviewProps) {
         secondary={<PatientSecondaryInfo patientInfo={props.patientInfo} />}
       />
       <ListItemSecondaryAction>
-        <Tooltip
-          title="Add new medical record for this patient"
-          placement="left"
-        >
+        <Tooltip title={translate('tooltips.add-record')} placement="left">
           <Fab
             className="patient-item-action"
             onClick={onAdd}
@@ -46,10 +45,7 @@ export function PatientOverview(props: PatientOverviewProps) {
             <Add />
           </Fab>
         </Tooltip>
-        <Tooltip
-          title="Review medical records for this patient"
-          placement="right"
-        >
+        <Tooltip title={translate('tooltips.view-records')} placement="right">
           <Fab
             className="patient-item-action"
             onClick={onView}

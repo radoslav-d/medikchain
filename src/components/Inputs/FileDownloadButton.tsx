@@ -1,5 +1,6 @@
 import { Fab, Tooltip } from '@material-ui/core';
 import { GetApp } from '@material-ui/icons';
+import { useTranslator } from '../../hooks/useTranslator';
 import {
   downloadFromIpfs,
   parseFileSummary,
@@ -10,6 +11,7 @@ interface FileDownloadButtonProps {
 }
 
 export function FileDownloadButton(props: FileDownloadButtonProps) {
+  const { translate } = useTranslator();
   const parsedFileInfo = parseFileSummary(props.fileInfo);
   if (!parsedFileInfo) {
     return null;
@@ -17,7 +19,7 @@ export function FileDownloadButton(props: FileDownloadButtonProps) {
   const { fileName, ipfsPath } = parsedFileInfo;
   return (
     <div>
-      <Tooltip title="Download this file on your device">
+      <Tooltip title={translate('tooltips.download-button')}>
         <Fab
           variant="extended"
           onClick={() => downloadFromIpfs(fileName, ipfsPath)}

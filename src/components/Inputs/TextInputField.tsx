@@ -1,6 +1,7 @@
 import { isAddress } from '@ethersproject/address';
 import { TextField } from '@material-ui/core';
 import { useState } from 'react';
+import { useTranslator } from '../../hooks/useTranslator';
 
 interface TextInputFieldProps {
   placeholder: string;
@@ -15,16 +16,17 @@ interface TextInputFieldProps {
 
 export function TextInputField(props: TextInputFieldProps) {
   const [isTouched, setIsTouched] = useState(false);
+  const { translate } = useTranslator();
   const hasValue = () => props.value.trim().length > 0;
   const getError = () => {
     if (!isTouched) {
       return null;
     }
     if (props.required && !hasValue()) {
-      return 'This field is required';
+      return translate('input-labels.text-input-validation-messages.required');
     }
     if (props.address && !isAddress(props.value)) {
-      return 'This is not a valid address';
+      return translate('input-labels.text-input-validation-messages.address');
     }
     return null;
   };

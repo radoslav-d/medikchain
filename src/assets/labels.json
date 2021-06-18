@@ -1,0 +1,174 @@
+{
+  "en": {
+    "navigation": {
+      "title": "Medikchain",
+      "home": "Home",
+      "register": "Register as patient",
+      "your-data": "My medical data",
+      "manage-data": "View or add patient medical records",
+      "give-access": "Give access to a user"
+    },
+    "user-info": {
+      "logged-as": "You are logged as",
+      "account": "account",
+      "balance": "balance"
+    },
+    "user-roles": {
+      "guest": "Guest",
+      "patient": "Patient",
+      "physician": "Physician",
+      "administrator": "Administrator"
+    },
+    "input-labels": {
+      "upload-button": "Upload",
+      "text-input-validation-messages": {
+        "required": "This field is required",
+        "address": "This is not a valid address"
+      },
+      "title": "Title",
+      "description": "Detailed description",
+      "patient-address": "Patient address",
+      "physician-address": "Physician address",
+      "medical-center-address": "Medical center address",
+      "user-address": "User address",
+      "tags": "Tags",
+      "submit-button": "Submit",
+      "grant-edit-access-button": "Grant edit access",
+      "grant-admin-access-button": "Grant admin access",
+      "patient-name": "Patient name",
+      "national-id": "National ID number",
+      "patient-gender": "Gender",
+      "register-button": "Register",
+      "search-tags": "Search by tags",
+      "filter-button": "Filter",
+      "search": "Search",
+      "clear-filter-button": "Clear filter",
+      "search-name-radio": "Search by name",
+      "search-id-radio": "Search by national ID"
+    },
+    "tooltips": {
+      "download-button": "Download this file on your device",
+      "upload-button": "Select file to upload as attachment",
+      "discard-file-button": "This file is captured. Click to discard it.",
+      "open-record-button": "Display detailed view for this record",
+      "add-record": "Add new medical record for this patient",
+      "view-records": "Review medical records for this patient",
+      "translate": "Change language"
+    },
+    "view-labels": {
+      "not-found": "Opps.. This resource is not found!",
+      "add-record": "Fill in a new medical record",
+      "no-records": "There are no records found",
+      "grant-access": "Authorize other users to view and edit personal data by granting them edit access. You can also delegate administration rights by granting admin access.",
+      "select-patient": "Find patients, so you can add new medical records or review the existing ones."
+    },
+    "notifications": {
+      "error": "Error",
+      "warning": "Warning",
+      "success": "Success",
+      "add-record-success": "Record added successfully",
+      "add-record-error": "Error occurred when adding record",
+      "grant-access-error": "Error occurred when granting access",
+      "grant-admin-access-success": "Admin access granted!",
+      "grant-edit-access-success": "Edit access granted!",
+      "register-success": "Registration successful",
+      "register-error": "Error occurred during registration"
+    },
+    "home-screen-labels": {
+      "1": "Welcome to Medikchain!",
+      "2": "Medikchain is a decentralized application, which can be used for tracking medical records.",
+      "3": "The underlying Ethereum blockchain provides immutability and security.",
+      "4": "Rely on privacy!",
+      "5": "Medikchain allows doctors and physicians to obtain the most vital information and do what is best for you.",
+      "6": "New medical records are handled in a secure and optimal way.",
+      "7": "No more misunderstandings!",
+      "8": "Once persisted, information in Medikchain cannot be manipulated."
+    }
+  },
+  "bg": {
+    "navigation": {
+      "title": "Медикчейн",
+      "home": "Начало",
+      "register": "Регистрирай се като пациент",
+      "your-data": "Твоите медицински данни",
+      "manage-data": "Прегледай или добави медицински записи за пациент",
+      "give-access": "Позволи достъп на друг потребител"
+    },
+    "user-info": {
+      "logged-as": "Вие сте влезли като ",
+      "account": "акаунт",
+      "balance": "баланс"
+    },
+    "user-roles": {
+      "guest": "Гост",
+      "patient": "Пациен",
+      "physician": "Медицинско лице",
+      "administrator": "Администратор"
+    },
+    "input-labels": {
+      "upload-button": "Качване",
+      "text-input-validation-messages": {
+        "required": "Това поле е задължително",
+        "address": "Това поле трябва да е валиден адрес"
+      },
+      "title": "Заглавие",
+      "description": "Подробно описание",
+      "patient-address": "Адрес на пациент",
+      "physician-address": "Адрес на медицинско лице",
+      "medical-center-address": "Адрес на клиника",
+      "user-address": "Потребителски адрес",
+      "tags": "Тагове",
+      "submit-button": "Създай",
+      "grant-edit-access-button": "Позволи достъп за редактиране",
+      "grant-admin-access-button": "Позволи администраторски достъп",
+      "patient-name": "Име на пациент",
+      "national-id": "ЕГН",
+      "patient-gender": "Пол",
+      "register-button": "Регистрирай се",
+      "search-tags": "Търси по тагове",
+      "filter-button": "Филтрирай",
+      "search": "Търси",
+      "clear-filter-button": "Изчисти филтър",
+      "search-name-radio": "Търси по име",
+      "search-id-radio": "Търси по ЕГН"
+    },
+    "tooltips": {
+      "download-button": "Изтегли този файл на твоето устройство",
+      "upload-button": "Избери файл за качване",
+      "discard-file-button": "Този файл е запазен. Кликни за да го премахнеш.",
+      "open-record-button": "Прегледай подробно този запис",
+      "add-record": "Добави нов запис за този пациент",
+      "view-records": "Прегледай медицинското досие на този пациент",
+      "translate": "Смени език"
+    },
+    "view-labels": {
+      "not-found": "Опа... Този ресурс не е намерен!",
+      "add-record": "Въведи данни за нов медицински запис",
+      "no-records": "Няма намерени медицински записи",
+      "grant-access": "Позволи на други потребители да преглеждат или добавят медицински записи. Можеш също да делегираш администраторски достъп, който позволява даването на права на достъп.",
+      "select-patient": "Намери пациенти за да добавиш нови медицински записи или да прегледаш съществуващите."
+    },
+    "notifications": {
+      "error": "Грешка",
+      "warning": "Внимание",
+      "success": "Успех",
+      "add-record-success": "Записът е добавен успешно",
+      "add-record-error": "Възникна грешка при добавянето на нов запис",
+      "grant-access-error": "Възникна грешка при делегирането на права на достъп",
+      "grant-admin-access-success": "Администраторски достъп е даден успешно",
+      "grant-edit-access-success": "Достъп на редактиране е даден успешно",
+      "register-success": "Регистрацията е успешна",
+      "register-error": "Възникна грешка при регистрация"
+    },
+    "home-screen-labels": {
+      "1": "Добре дошли в Медикчейн!",
+      "2": "Медикчейн е децентрализирано приложение за управление на медицински досиета.",
+      "3": "Скритият Етериум блокчейн предлага сигурност и защита от злонамерени манипулации на данните.",
+      "4": "Разчитай на конфиденциалност!",
+      "5": "Медикчейн позволява на медицински лица да откриват най-важната информация и да правят най-доброто на пациентите си.",
+      "6": "Новите медицински записи се обработват по най-сигурния и оптимален начин.",
+      "7": "Без повече недоразумения!",
+      "8": "Веднъж въведена, информацията в Медикчейн остава неприкосновена."
+    }
+  }
+}
