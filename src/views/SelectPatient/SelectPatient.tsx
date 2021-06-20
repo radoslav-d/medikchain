@@ -10,6 +10,9 @@ import './SelectPatient.css';
 import { VirtualList } from '../../components/VirtualList/VirtualList';
 import { PatientOverview } from './PatientOverview';
 
+const LIST_ITEM_HEIGHT = 76;
+const VIRTUAL_LIST_HEIGHT = 450;
+
 enum SearchType {
   BY_NAME = 'name',
   BY_NATIONAL_ID = 'nationalId',
@@ -25,9 +28,6 @@ const SEARCH_OPTIONS = [
     value: SearchType.BY_NATIONAL_ID,
   },
 ];
-
-const LIST_ITEM_HEIGHT = 76;
-const VIRTUAL_LIST_HEIGHT = 450;
 
 export function SelectPatient() {
   const [patientsInfoCache, setPatientsInfoCache] = useState<PatientInfo[]>([]);

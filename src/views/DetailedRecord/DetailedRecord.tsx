@@ -1,6 +1,6 @@
 import { isAddress } from '@ethersproject/address';
 import { Card, CardActions, CardContent, Typography } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppLoading } from '../../hooks/useAppLoading';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
@@ -37,19 +37,22 @@ export function DetailedRecord() {
     };
     retrieveRecordInfo();
   }, [patientAddress, medicalRecordId]);
+
+  const secondaryContent = useMemo(
+    () => [
+      record && getFormattedDate(record),
+      `${translate('input-labels.patient-address')}: ${record?.patient}`,
+      `${translate('input-labels.physician-address')}: ${record?.physician}`,
+      `${translate('input-labels.medical-center-address')}: ${
+        record?.medicalCenter
+      }`,
+    ],
+    [record, translate]
+  );
+
   if (!isRecordIdValid()) {
     return <NotFound />;
   }
-
-  const secondaryContent = [
-    record && getFormattedDate(record),
-    `${translate('input-labels.patient-address')}: ${record?.patient}`,
-    `${translate('input-labels.physician-address')}: ${record?.physician}`,
-    `${translate('input-labels.medical-center-address')}: ${
-      record?.medicalCenter
-    }`,
-  ];
-
   return (
     <PatientAddressAccess patientRecordAddress={patientAddress}>
       <Card className="detailed-record">
@@ -60,7 +63,7 @@ export function DetailedRecord() {
         </CardContent>
         <CardContent>
           {secondaryContent.map((data) => (
-            <Typography variant="subtitle1" color="primary">
+            <Typography key={data} variant="subtitle1" color="primary">
               {data}
             </Typography>
           ))}
