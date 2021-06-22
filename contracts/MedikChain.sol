@@ -39,8 +39,6 @@ contract MedikChain {
         address patient
     );
 
-    uint private recordsCount = 0;
-
     // keeps mapping between user (their address) and their access rights
     mapping(address => UserRole) private userRoles;
 
@@ -94,19 +92,18 @@ contract MedikChain {
         _user.transfer(1 ether);
     }
 
-    function canEdit() public view returns(bool) {
+    function canEdit() public view returns (bool) {
         return userRoles[msg.sender].isEditor;
     }
 
-    function canGiveAccess() public view returns(bool) {
+    function canGiveAccess() public view returns (bool) {
         return userRoles[msg.sender].isAdmin;
     }
 
     function addMedicalRecord(address _patient, address _physician, string memory _title, string memory _description,
-                              address _medicalCenter, string[] memory _tags, string memory _attachment) public onlyEditors {
-        patientRecords[_patient][recordsForPatients[_patient]] = MedicalRecord(recordsForPatients[_patient], _title, _description, _physician,
-                                                                      _patient, block.timestamp, _medicalCenter, _tags,
-                                                                      _attachment);
+        address _medicalCenter, string[] memory _tags, string memory _attachment) public onlyEditors {
+        patientRecords[_patient][recordsForPatients[_patient]] = MedicalRecord(recordsForPatients[_patient], _title,
+            _description, _physician, _patient, block.timestamp, _medicalCenter, _tags, _attachment);
         emit MedicalRecordPublished(recordsForPatients[_patient]++, _patient);
     }
 
@@ -134,7 +131,7 @@ contract MedikChain {
         return result;
     }
 
-    function isRegistered() public view returns(bool) {
+    function isRegistered() public view returns (bool) {
         return patientsInfo[msg.sender].registered;
     }
 
