@@ -5,7 +5,6 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { useNotifications } from './hooks/useNotifications';
 import { appEnv } from './state/env';
 import { BackdropSpinner } from './components/BackdropSpinner/BackdropSpinner';
-import './App.css';
 import { useAppLoading } from './hooks/useAppLoading';
 import { Router } from './Router';
 

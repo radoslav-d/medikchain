@@ -8,7 +8,6 @@ import { App } from './App';
 import { store } from './state/store';
 import { appEnv } from './state/env';
 import * as serviceWorker from './serviceWorker';
-import './index.css';
 
 function getLibrary(): JsonRpcProvider {
   const providerUrl = appEnv().mandatory.jsonRpcProviderUrl;
