@@ -10,7 +10,7 @@ import { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
 import { useTranslator } from '../../hooks/useTranslator';
-import { UserRole } from '../../lib/types/UserRole';
+import { useUserRole } from '../../hooks/useUserRole';
 import {
   getOptionsForUserRole,
   MenuOptionKeys,
@@ -18,7 +18,6 @@ import {
 } from './NavigationMenuOptions';
 
 interface NavigationMenuProps {
-  role: UserRole;
   anchorElement: HTMLElement | null;
   closeCallback?: () => void;
 }
@@ -27,7 +26,8 @@ export function NavigationMenu(props: NavigationMenuProps) {
   const history = useHistory();
   const { account } = useAccount();
   const { translate } = useTranslator();
-  const { role, anchorElement, closeCallback } = props;
+  const { userRole } = useUserRole();
+  const { anchorElement, closeCallback } = props;
 
   const onOptionSelected = useCallback(
     (navigateTo: string) => {
@@ -73,7 +73,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
         onSelect={() => onOptionSelected('/')}
         icon={<HomeIcon />}
       />
-      {getOptionsForUserRole(role).map((key) => (
+      {getOptionsForUserRole(userRole).map((key) => (
         <NavigationMenuOption
           key={key}
           label={translate(menuOptionsData[key].label)}

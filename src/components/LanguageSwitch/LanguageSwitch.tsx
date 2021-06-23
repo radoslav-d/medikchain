@@ -32,6 +32,7 @@ export function LanguageSwitch() {
       >
         {languageOptions.map((language) => (
           <MenuItem
+            key={language}
             onClick={() => {
               closeMenu();
               changeLanguage(language);

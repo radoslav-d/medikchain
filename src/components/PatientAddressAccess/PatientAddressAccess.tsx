@@ -1,10 +1,9 @@
 import { isAddress } from '@ethersproject/address';
-import { ReactChild, useEffect, useState } from 'react';
+import { ReactChild } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
 import { useUserRole } from '../../hooks/useUserRole';
 import { canEdit } from '../../lib/helpers/UserRoleHelper';
-import { BackdropSpinner } from '../BackdropSpinner/BackdropSpinner';
 import { NotFound } from '../NotFound/NotFound';
 
 interface PatientAddressAccessProps {
@@ -15,18 +14,11 @@ interface PatientAddressAccessProps {
 
 export function PatientAddressAccess(props: PatientAddressAccessProps) {
   const { account } = useAccount();
-  const { role, updateUserRole } = useUserRole();
-  const [loading, setLoading] = useState(true);
+  const { userRole } = useUserRole();
 
   const allowsRecordView = (patientRecordAddress: string) =>
-    account === patientRecordAddress || canEdit(role);
+    account === patientRecordAddress || canEdit(userRole);
 
-  useEffect(() => {
-    updateUserRole().then(() => setLoading(false));
-  }, [role, account, updateUserRole]);
-  if (loading) {
-    return <BackdropSpinner opened={loading} />;
-  }
   if (!isAddress(props.patientRecordAddress)) {
     return <NotFound />;
   }

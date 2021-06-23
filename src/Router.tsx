@@ -14,10 +14,12 @@ import { useUserRole } from './hooks/useUserRole';
 import { UserRole } from './lib/types/UserRole';
 
 export function Router() {
-  const { role, updateUserRole } = useUserRole();
+  const { userRole, fetchUserRole } = useUserRole();
+
   useEffect(() => {
-    updateUserRole();
-  }, [role, updateUserRole]);
+    fetchUserRole();
+  }, [fetchUserRole]);
+
   return (
     <BrowserRouter>
       <Navigation />
@@ -25,7 +27,7 @@ export function Router() {
         <PrivateRoute
           path="/patient-records/new/:patientAddress"
           redirectPath="/"
-          callback={() => canEdit(role)}
+          callback={() => canEdit(userRole)}
         >
           <AddRecordForm />
         </PrivateRoute>
@@ -38,23 +40,23 @@ export function Router() {
         <PrivateRoute
           path="/patient-records"
           redirectPath="/"
-          callback={() => canEdit(role)}
+          callback={() => canEdit(userRole)}
         >
           <SelectPatient />
         </PrivateRoute>
         <PrivateRoute
           path="/give-access"
           redirectPath="/"
-          callback={() => role === UserRole.ADMIN}
+          callback={() => userRole === UserRole.ADMIN}
         >
           <GrantAccess />
         </PrivateRoute>
         <PrivateRoute
           path="/register"
           redirectPath="/"
-          callback={() => role === UserRole.GUEST}
+          callback={() => userRole === UserRole.GUEST}
         >
-          <PatientRegister onRegister={updateUserRole} />
+          <PatientRegister onRegister={fetchUserRole} />
         </PrivateRoute>
         <Route path="/">
           <Home />
