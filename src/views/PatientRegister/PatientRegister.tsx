@@ -27,19 +27,20 @@ export function PatientRegister(props: PatientRegisterProps) {
     try {
       await registerAsPatient(name, nationalId, gender);
       props.onRegister();
+      history.push('/');
       pushSuccessNotification('notifications.register-success');
     } catch (e) {
       pushErrorNotification('notifications.register-error');
+    } finally {
+      dispatchNotLoading();
     }
-    dispatchNotLoading();
-    history.push('/');
   };
   const isValid = () => {
     return name.trim() && nationalId.trim() && gender.trim();
   };
   return (
     <Paper elevation={2} className="register-form">
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <TextInputField
           className="register-form-item"
           placeholder={translate('input-labels.patient-name')}
@@ -61,15 +62,18 @@ export function PatientRegister(props: PatientRegisterProps) {
           onChange={setGender}
           required
         />
-        <Button
-          className="register-form-item"
-          variant="contained"
-          color="primary"
-          onClick={register}
-          disabled={!isValid()}
-        >
-          {translate('input-labels.register-button')}
-        </Button>
+        <div className="register-form-item register-form-submit-button-wrapper">
+          <Button
+            type="submit"
+            className="register-form-submit-button"
+            variant="contained"
+            color="primary"
+            onClick={register}
+            disabled={!isValid()}
+          >
+            {translate('input-labels.register-button')}
+          </Button>
+        </div>
       </form>
     </Paper>
   );
