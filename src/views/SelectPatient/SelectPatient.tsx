@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import { useMedikChainApi } from '../../hooks/useMedikChainApi';
@@ -76,7 +76,7 @@ export function SelectPatient() {
           onSelect={setSearchType}
         />
       </div>
-      <div className="select-patient-list">
+      <Paper elevation={2} className="select-patient-list">
         <VirtualList
           data={patientsInfoView}
           mapping={(patientInfo) => (
@@ -85,7 +85,7 @@ export function SelectPatient() {
           height={VIRTUAL_LIST_HEIGHT}
           childHeight={LIST_ITEM_HEIGHT}
         />
-      </div>
+      </Paper>
     </div>
   );
 }

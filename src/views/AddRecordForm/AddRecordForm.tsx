@@ -1,5 +1,5 @@
 import { isAddress } from '@ethersproject/address';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Paper, Typography } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
@@ -64,7 +64,7 @@ export function AddRecordForm() {
     return '';
   };
   return (
-    <div className="add-record-form">
+    <Paper elevation={2} className="add-record-form">
       <Typography variant="h6" color="primary">
         {translate('view-labels.add-record')}
       </Typography>
@@ -129,6 +129,6 @@ export function AddRecordForm() {
       >
         {translate('input-labels.submit-button')}
       </Button>
-    </div>
+    </Paper>
   );
 }
