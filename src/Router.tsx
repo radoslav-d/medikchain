@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useAccount } from './hooks/useAccount';
 import { canEdit } from './lib/helpers/UserRoleHelper';
 import { AddRecordForm } from './views/AddRecordForm/AddRecordForm';
 import { DetailedRecord } from './views/DetailedRecord/DetailedRecord';
@@ -15,10 +16,10 @@ import { UserRole } from './lib/types/UserRole';
 
 export function Router() {
   const { userRole, fetchUserRole } = useUserRole();
-
+  const { account } = useAccount();
   useEffect(() => {
     fetchUserRole();
-  }, [fetchUserRole]);
+  }, [account, fetchUserRole]);
 
   return (
     <BrowserRouter>
