@@ -29,7 +29,7 @@ export function RecordOverview(props: { medicalRecord: MedicalRecord }) {
         secondary={getFormattedDate(props.medicalRecord)}
       />
       <ListItemSecondaryAction>
-        <Tooltip title={translate('title.open-record-button')}>
+        <Tooltip title={translate('tooltips.open-record-button')}>
           <IconButton edge="end" onClick={openDetailedView}>
             <OpenInNew />
           </IconButton>
