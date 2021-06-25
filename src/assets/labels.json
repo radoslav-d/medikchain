@@ -56,6 +56,7 @@
       "translate": "Change language"
     },
     "view-labels": {
+      "home": "Welcome to Medikchain - the application that utilizes blockchain in order to provide secure management on medical records",
       "not-found": "Opps.. This resource is not found!",
       "add-record": "Fill in a new medical record",
       "no-records": "There are no records found",
@@ -74,15 +75,11 @@
       "register-success": "Registration successful",
       "register-error": "Error occurred during registration"
     },
-    "home-screen-labels": {
-      "1": "Welcome to Medikchain!",
-      "2": "Medikchain is a decentralized application, which can be used for tracking medical records.",
-      "3": "The underlying Ethereum blockchain provides immutability and security.",
-      "4": "Rely on privacy!",
-      "5": "Medikchain allows doctors and physicians to obtain the most vital information and do what is best for you.",
-      "6": "New medical records are handled in a secure and optimal way.",
-      "7": "No more misunderstandings!",
-      "8": "Once persisted, information in Medikchain cannot be manipulated."
+    "home-screen-options": {
+      "register": "Registering allows tracking you medical history and gives more flexibility for your physicians. Medikchain will keep your data safe and untouched.",
+      "your-data": "Review your medical history. You can filter it by tags and receive a detailed view for each medical record.",
+      "manage-data": "You can search for a patient and review his/her medical history or append a new record.",
+      "give-access": "Give \"Admin\" or \"Edit\" access to other users, so they can manage medical records and/or other users` access rights"
     }
   },
   "bg": {
@@ -142,6 +139,7 @@
       "translate": "Смени език"
     },
     "view-labels": {
+      "home": "Добре дошли в Медикчейн - приложението, което използва блокчейн за да предостави сигурност при управление на медицински записи",
       "not-found": "Опа... Този ресурс не е намерен!",
       "add-record": "Въведи данни за нов медицински запис",
       "no-records": "Няма намерени медицински записи",
@@ -160,15 +158,11 @@
       "register-success": "Регистрацията е успешна",
       "register-error": "Възникна грешка при регистрация"
     },
-    "home-screen-labels": {
-      "1": "Добре дошли в Медикчейн!",
-      "2": "Медикчейн е децентрализирано приложение за управление на медицински досиета.",
-      "3": "Скритият Етериум блокчейн предлага сигурност и защита от злонамерени манипулации на данните.",
-      "4": "Разчитай на конфиденциалност!",
-      "5": "Медикчейн позволява на медицински лица да откриват най-важната информация и да правят най-доброто на пациентите си.",
-      "6": "Новите медицински записи се обработват по най-сигурния и оптимален начин.",
-      "7": "Без повече недоразумения!",
-      "8": "Веднъж въведена, информацията в Медикчейн остава неприкосновена."
+    "home-screen-options": {
+      "register": "Следи медицинската си история и помагай на лекарите да я управляват. Медикчейн гарантира поверителност и сигурност за твоите данни.",
+      "your-data": "Прегледай медицинската си история. Можеш да я филтрираш, чрез търсене по тагове и да преглеждаш детайлно всеки един запис.",
+      "manage-data": "Търси информация за пациенти, преглеждай тяхната история и добавяй нови медицински записи.",
+      "give-access": "Разреши редакторски или администраторски права на потребители, за да могат да управляват медицински записи или права на достъп."
     }
   }
 }

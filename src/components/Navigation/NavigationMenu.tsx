@@ -11,11 +11,9 @@ import { useHistory } from 'react-router-dom';
 import { useAccount } from '../../hooks/useAccount';
 import { useTranslator } from '../../hooks/useTranslator';
 import { useUserRole } from '../../hooks/useUserRole';
-import {
-  getOptionsForUserRole,
-  MenuOptionKeys,
-  NavigationMenuOption,
-} from './NavigationMenuOptions';
+import { getNavigationOptions } from '../../lib/helpers/UserRoleHelper';
+import { NavigationOptions } from '../../lib/types/NavigationOptions';
+import { NavigationMenuOption } from './NavigationMenuOptions';
 
 interface NavigationMenuProps {
   anchorElement: HTMLElement | null;
@@ -39,22 +37,22 @@ export function NavigationMenu(props: NavigationMenuProps) {
 
   const menuOptionsData = useMemo(() => {
     return {
-      [MenuOptionKeys.REGISTER]: {
+      [NavigationOptions.REGISTER]: {
         label: 'navigation.register',
         onSelect: () => onOptionSelected('/register'),
         icon: <MeetingRoom />,
       },
-      [MenuOptionKeys.VIEW_PERSONAL_DATA]: {
+      [NavigationOptions.VIEW_PERSONAL_DATA]: {
         label: 'navigation.your-data',
         onSelect: () => onOptionSelected(`/patient-records/${account}`),
         icon: <Person />,
       },
-      [MenuOptionKeys.MANAGE_PATIENT_DATA]: {
+      [NavigationOptions.MANAGE_PATIENT_DATA]: {
         label: 'navigation.manage-data',
         onSelect: () => onOptionSelected('/patient-records'),
         icon: <SupervisedUserCircle />,
       },
-      [MenuOptionKeys.GIVE_ACCESS_RIGHTS]: {
+      [NavigationOptions.GIVE_ACCESS_RIGHTS]: {
         label: 'navigation.give-access',
         onSelect: () => onOptionSelected('/give-access'),
         icon: <LockOpen />,
@@ -73,7 +71,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
         onSelect={() => onOptionSelected('/')}
         icon={<HomeIcon />}
       />
-      {getOptionsForUserRole(userRole).map((key) => (
+      {getNavigationOptions(userRole).map((key) => (
         <NavigationMenuOption
           key={key}
           label={translate(menuOptionsData[key].label)}

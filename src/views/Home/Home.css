@@ -1,16 +1,11 @@
-.home {
-    padding: 5vh;
+.home-description-wrapper {
+    width: 75vw;
+    text-align: center;
+    margin: 8vh auto 6vh auto;
 }
 
-.with-margin {
-    margin: 20px !important;
-}
-
-.left-aligned-text {
-    text-align: left;
-}
-
-.right-aligned-text {
-    text-align: right;
+.home-card-options-wrapper {
+    display: flex;
+    justify-content: center;
 }
 

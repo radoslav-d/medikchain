@@ -1,0 +1,31 @@
+.home-option-card {
+    width: 300px;
+    height: 400px;
+    text-align: center;
+    margin: 20px;
+}
+
+.home-option-card-content {
+    height: 75%;
+}
+
+.home-option-card-icon {
+    display: flex;
+    justify-content: center;
+}
+
+.home-option-card-icon > svg {
+    font-size: 7rem !important;
+}
+
+.home-option-card-title {
+    margin: 10px 0 !important;
+}
+
+.home-option-card-description {
+    text-align: justify;
+}
+
+.home-option-card-actions {
+    justify-content: center;
+}
