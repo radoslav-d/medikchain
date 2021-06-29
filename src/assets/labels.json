@@ -98,7 +98,7 @@
     },
     "user-roles": {
       "guest": "Гост",
-      "patient": "Пациен",
+      "patient": "Пациент",
       "physician": "Медицинско лице",
       "administrator": "Администратор"
     },
