@@ -1,6 +1,8 @@
 # Medikchain
 ## Decentralized application for managing Health Medical Records
 
+![Medikchain logo](/public/logo.png)
+
 _This is project is initially developed as dissertation work for my bachelor degree in Technical University of Sofia._
 
 ## Motivation
