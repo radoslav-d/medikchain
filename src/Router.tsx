@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useAccount } from './hooks/useAccount';
+import { useAppLoading } from './hooks/useAppLoading';
 import { canEdit } from './lib/helpers/UserRoleHelper';
 import { AddRecordForm } from './views/AddRecordForm/AddRecordForm';
 import { DetailedRecord } from './views/DetailedRecord/DetailedRecord';
@@ -17,10 +18,16 @@ import { UserRole } from './lib/types/UserRole';
 export function Router() {
   const { userRole, fetchUserRole } = useUserRole();
   const { account } = useAccount();
+  const { dispatchLoading, dispatchNotLoading } = useAppLoading();
   useEffect(() => {
-    fetchUserRole();
-  }, [account, fetchUserRole]);
-
+    dispatchLoading();
+    fetchUserRole().then(() => {
+      dispatchNotLoading();
+    });
+  }, [account]);
+  if (userRole === UserRole.UNASSIGNED) {
+    return null;
+  }
   return (
     <BrowserRouter>
       <Navigation />

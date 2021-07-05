@@ -5,7 +5,7 @@ import { RootState } from './store';
 const userRoleSlice = createSlice({
   name: 'appUserRole',
   initialState: {
-    role: UserRole.GUEST,
+    role: UserRole.UNASSIGNED,
   },
   reducers: {
     setUserRole: (state, action: PayloadAction<UserRole>) => {

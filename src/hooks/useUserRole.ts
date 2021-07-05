@@ -1,7 +1,7 @@
 import { UserRole } from '../lib/types/UserRole';
 import { selectUserRole, setUserRole } from '../state/appUserRole';
-import { useMedikChainApi } from './useMedikChainApi';
 import { useAppDispatch, useAppSelector } from '../state/hooks';
+import { useMedikChainApi } from './useMedikChainApi';
 
 export function useUserRole() {
   const dispatch = useAppDispatch();
@@ -26,7 +26,9 @@ export function useUserRole() {
     const isPatient = (await isRegistered())[0];
     if (isPatient) {
       dispatchSetUserRole(UserRole.PATIENT);
+      return;
     }
+    dispatchSetUserRole(UserRole.GUEST);
   };
   return { userRole, fetchUserRole };
 }
