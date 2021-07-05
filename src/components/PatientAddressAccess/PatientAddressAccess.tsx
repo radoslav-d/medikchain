@@ -25,5 +25,5 @@ export function PatientAddressAccess(props: PatientAddressAccessProps) {
   if (!allowsRecordView(props.patientRecordAddress)) {
     return <Redirect to={props.redirectPath || '/'} />;
   }
-  return <div>{props.children}</div>;
+  return <>{props.children}</>;
 }

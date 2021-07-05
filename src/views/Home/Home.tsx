@@ -51,7 +51,7 @@ export function Home() {
   }, [account, history]);
 
   return (
-    <div>
+    <>
       <div className="home-description-wrapper">
         <Typography variant="h3" color="primary">
           {translate('view-labels.home')}
@@ -68,6 +68,6 @@ export function Home() {
           />
         ))}
       </div>
-    </div>
+    </>
   );
 }

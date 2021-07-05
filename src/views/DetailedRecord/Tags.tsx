@@ -6,7 +6,7 @@ interface TagsProps {
 
 export function Tags(props: TagsProps) {
   return (
-    <div>
+    <>
       {props.tags.map((tag) => (
         <Chip
           className="record-tag"
@@ -17,6 +17,6 @@ export function Tags(props: TagsProps) {
           variant="outlined"
         />
       ))}
-    </div>
+    </>
   );
 }

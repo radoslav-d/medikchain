@@ -30,12 +30,12 @@ export function App() {
   }, [account, active, activate, error]);
 
   if (!active) {
-    return <div>Web3 is not loaded yet...</div>;
+    return <p>Web3 is not loaded yet...</p>;
   }
   return (
-    <div>
+    <>
       <Router />
       <BackdropSpinner opened={isAppLoading} />
-    </div>
+    </>
   );
 }

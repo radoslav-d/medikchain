@@ -17,13 +17,12 @@ export function LanguageSwitch() {
     [getAvailableLanguages]
   );
   return (
-    <div>
+    <>
       <Tooltip title={translate('tooltips.translate')} placement="bottom">
         <IconButton color="inherit" onClick={openMenu} edge="end">
           <Translate />
         </IconButton>
       </Tooltip>
-
       <Menu
         anchorEl={anchorElement}
         keepMounted
@@ -42,6 +41,6 @@ export function LanguageSwitch() {
           </MenuItem>
         ))}
       </Menu>
-    </div>
+    </>
   );
 }

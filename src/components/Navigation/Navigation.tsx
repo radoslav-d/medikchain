@@ -18,7 +18,7 @@ export function Navigation() {
     setAnchorElement(null);
   };
   return (
-    <div style={{ flexGrow: 1 }} className="navigation-bar">
+    <div className="navigation-bar">
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={openMenu}>

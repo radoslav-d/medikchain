@@ -22,17 +22,16 @@ export function SearchBar(props: SearchBarProps) {
         onChange={setSearchValue}
       />
       <div className="search-button-wrapper">
-          <Button
-              onClick={() => props.onSearch(searchValue)}
-              variant="contained"
-              color="primary"
-              disabled={searchValue.trim().length < 2}
-              startIcon={props.buttonIcon}
-          >
-              {props.buttonLabel}
-          </Button>
+        <Button
+          onClick={() => props.onSearch(searchValue)}
+          variant="contained"
+          color="primary"
+          disabled={searchValue.trim().length < 2}
+          startIcon={props.buttonIcon}
+        >
+          {props.buttonLabel}
+        </Button>
       </div>
-
     </div>
   );
 }
